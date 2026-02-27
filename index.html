@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeluxPlay – Midnight Gold iGaming</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== VARIABLES ===================== */
+:root {
+  --bg:        #06080F;
+  --bg2:       #0E1422;
+  --bg3:       #121B30;
+  --card:      #111827;
+  --card2:     #182035;
+  --gold:      #F5C518;
+  --amber:     #FF8C00;
+  --teal:      #00E5CC;
+  --pink:      #FF2D55;
+  --white:     #F0F2F5;
+  --muted:     #6B7A99;
+  --border:    rgba(245,197,24,0.12);
+  --border2:   rgba(255,255,255,0.06);
+}
+
+/* ===================== RESET ===================== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ===================== NOISE ===================== */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.5;
+}
+
+/* ===================== SCROLLBAR ===================== */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--amber));border-radius:2px}
+
+/* ===================== NAVBAR ===================== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  background:rgba(6,8,15,0.7);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  transition:background .4s;
+}
+.navbar.scrolled{background:rgba(6,8,15,0.97)}
+
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.9rem;letter-spacing:4px;
+  text-decoration:none;
+  background:linear-gradient(120deg,var(--gold) 0%,var(--amber) 50%,var(--teal) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  flex-shrink:0;
+}
+
+.nav-menu{
+  display:flex;gap:32px;list-style:none;align-items:center;
+}
+.nav-menu a{
+  color:var(--muted);text-decoration:none;
+  font-size:.82rem;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;
+  transition:color .25s;position:relative;padding-bottom:2px;
+}
+.nav-menu a::after{
+  content:'';position:absolute;bottom:0;left:0;
+  width:0;height:1px;background:var(--gold);transition:width .3s;
+}
+.nav-menu a:hover{color:var(--white)}
+.nav-menu a:hover::after{width:100%}
+.nav-menu a.active{color:var(--gold)}
+.nav-menu a.active::after{width:100%}
+
+.nav-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
+
+.btn-ghost{
+  padding:9px 22px;
+  background:transparent;
+  border:1px solid rgba(245,197,24,0.35);
+  color:var(--gold);
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;border-radius:3px;transition:all .25s;
+}
+.btn-ghost:hover{background:rgba(245,197,24,0.08);border-color:var(--gold)}
+
+.btn-primary{
+  padding:9px 26px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));
+  color:#000;
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;border:none;border-radius:3px;
+  position:relative;overflow:hidden;transition:opacity .25s;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#fff2 0%,transparent 60%);
+  opacity:0;transition:opacity .25s;
+}
+.btn-primary:hover::before{opacity:1}
+
+/* ===================== HERO ===================== */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;
+  overflow:hidden;padding-top:68px;
+}
+
+/* diagonal beam */
+.hero-beam{
+  position:absolute;
+  top:-20%;right:5%;
+  width:600px;height:140%;
+  background:linear-gradient(170deg,
+    rgba(245,197,24,0.07) 0%,
+    rgba(255,140,0,0.04) 40%,
+    transparent 70%);
+  transform:rotate(-15deg);
+  pointer-events:none;
+}
+.hero-beam2{
+  position:absolute;
+  top:20%;left:-10%;
+  width:500px;height:80%;
+  background:radial-gradient(ellipse at center,
+    rgba(0,229,204,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* grid lines */
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(245,197,24,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,197,24,0.03) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);
+  pointer-events:none;
+}
+
+/* particles */
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;border-radius:50%;
+  animation:particleFloat linear infinite;
+  opacity:0;
+}
+@keyframes particleFloat{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:.6}
+  90%{opacity:.3}
+  100%{opacity:0;transform:translateY(-20px) scale(1)}
+}
+
+.hero-inner{
+  position:relative;z-index:2;
+  width:100%;max-width:1400px;margin:0 auto;
+  padding:0 60px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+
+/* LEFT */
+.hero-left{}
+
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 18px;
+  background:rgba(245,197,24,0.08);
+  border:1px solid rgba(245,197,24,0.25);
+  border-radius:100px;
+  font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  animation:fadeUp .7s .1s both;
+}
+.hero-pill .dot{
+  width:7px;height:7px;background:var(--teal);border-radius:50%;
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--teal)}50%{opacity:.3;box-shadow:none}}
+
+.hero-h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(4rem,7.5vw,7.5rem);
+  line-height:.92;letter-spacing:2px;
+  animation:fadeUp .7s .2s both;
+}
+.hero-h1 .line-gold{
+  background:linear-gradient(90deg,var(--gold),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-h1 .line-outline{
+  -webkit-text-stroke:1.5px rgba(245,197,24,0.4);
+  color:transparent;
+}
+.hero-h1 .line-white{color:var(--white)}
+
+.hero-desc{
+  margin-top:22px;font-size:1.05rem;
+  color:var(--muted);line-height:1.65;max-width:460px;
+  animation:fadeUp .7s .3s both;
+}
+
+.hero-stats{
+  display:flex;gap:0;margin:32px 0;
+  animation:fadeUp .7s .4s both;
+}
+.hstat{
+  flex:1;padding:18px 20px;
+  border-left:1px solid var(--border2);
+}
+.hstat:first-child{border-left:none;padding-left:0}
+.hstat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.4rem;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;
+}
+.hstat-label{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+.hero-btns{
+  display:flex;gap:14px;
+  animation:fadeUp .7s .5s both;
+}
+.btn-hero-main{
+  padding:15px 42px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));
+  color:#000;border:none;border-radius:3px;
+  font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:2.5px;
+  cursor:pointer;position:relative;overflow:hidden;transition:transform .2s;
+}
+.btn-hero-main:hover{transform:translateY(-2px)}
+.btn-hero-main::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.btn-hero-main:hover::after{transform:translateX(100%)}
+
+.btn-hero-ghost{
+  padding:15px 36px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.15);color:var(--white);
+  border-radius:3px;font-family:'Bebas Neue',sans-serif;
+  font-size:1.15rem;letter-spacing:2.5px;cursor:pointer;
+  transition:all .25s;display:flex;align-items:center;gap:10px;
+}
+.btn-hero-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.play-icon{
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid currentColor;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;
+}
+
+/* RIGHT — Visual */
+.hero-right{
+  display:flex;justify-content:center;align-items:center;
+  animation:fadeUp .7s .3s both;
+}
+
+.casino-visual{
+  position:relative;width:420px;height:480px;
+}
+
+/* big glowing coin */
+.glow-coin{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:240px;height:240px;border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 35%,rgba(245,197,24,.6) 0%,rgba(255,140,0,.3) 40%,rgba(0,0,0,0) 70%),
+    conic-gradient(from 0deg,var(--gold),var(--amber),#8B6914,var(--gold));
+  box-shadow:
+    0 0 60px rgba(245,197,24,.3),
+    0 0 120px rgba(245,197,24,.15),
+    inset 0 0 40px rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;
+  animation:coinSpin 12s linear infinite, coinFloat 4s ease-in-out infinite;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.5rem;letter-spacing:2px;
+  color:rgba(0,0,0,.6);
+  border:3px solid rgba(245,197,24,.4);
+}
+@keyframes coinSpin{from{box-shadow:0 0 60px rgba(245,197,24,.3),0 0 120px rgba(245,197,24,.15),inset 0 0 40px rgba(0,0,0,.5)}to{box-shadow:0 0 80px rgba(245,197,24,.5),0 0 160px rgba(245,197,24,.25),inset 0 0 40px rgba(0,0,0,.5)}}
+@keyframes coinFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
+
+/* orbit ring */
+.orbit-ring{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:310px;height:310px;border-radius:50%;
+  border:1px dashed rgba(245,197,24,.2);
+  animation:orbitSpin 20s linear infinite;
+}
+@keyframes orbitSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+.orbit-dot{
+  position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  width:12px;height:12px;border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 12px var(--teal);
+}
+
+/* floating mini cards */
+.mini-card{
+  position:absolute;
+  background:var(--card2);
+  border:1px solid rgba(245,197,24,.2);
+  border-radius:10px;padding:12px 16px;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
+  backdrop-filter:blur(10px);
+  white-space:nowrap;
+}
+.mc1{top:10px;left:-30px;animation:mcFloat1 5s ease-in-out infinite}
+.mc2{top:30px;right:-20px;animation:mcFloat2 6s ease-in-out infinite}
+.mc3{bottom:60px;left:-10px;animation:mcFloat3 7s ease-in-out infinite}
+.mc4{bottom:30px;right:-20px;animation:mcFloat4 4.5s ease-in-out infinite}
+
+@keyframes mcFloat1{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(-4deg)}}
+@keyframes mcFloat2{0%,100%{transform:translateY(0) rotate(3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+@keyframes mcFloat3{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(-2deg)}}
+@keyframes mcFloat4{0%,100%{transform:translateY(0) rotate(5deg)}50%{transform:translateY(-20px) rotate(5deg)}}
+
+.mc-label{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.mc-value{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:1px}
+.mc-value.gold{color:var(--gold)}
+.mc-value.teal{color:var(--teal)}
+.mc-value.pink{color:var(--pink)}
+.mc-badge{
+  display:inline-block;padding:2px 8px;border-radius:2px;
+  font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.mc-badge.live{background:var(--pink);color:white}
+.mc-badge.hot{background:var(--amber);color:#000}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===================== TICKER ===================== */
+.ticker-wrap{
+  background:rgba(245,197,24,.06);
+  border-top:1px solid rgba(245,197,24,.15);
+  border-bottom:1px solid rgba(245,197,24,.15);
+  padding:11px 0;overflow:hidden;position:relative;
+}
+.ticker-wrap::before,.ticker-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
+}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+
+.ticker-track{
+  display:flex;gap:0;
+  animation:tickerScroll 35s linear infinite;
+  width:max-content;
+}
+.ticker-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:.75rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  padding:0 30px;
+  border-right:1px solid rgba(245,197,24,.1);
+}
+.ti-icon{font-size:1rem}
+.ti-name{color:var(--muted)}
+.ti-won{color:var(--white)}
+.ti-amount{color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:1px}
+
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===================== SECTION BASE ===================== */
+.section{padding:90px 60px;max-width:1400px;margin:0 auto}
+.section-full{padding:90px 0}
+.section-full .section-inner{max-width:1400px;margin:0 auto;padding:0 60px}
+
+.s-eyebrow{
+  font-size:.68rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--teal);font-weight:700;margin-bottom:10px;
+}
+.s-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,4vw,3.8rem);letter-spacing:2px;line-height:1;
+}
+.s-title .g{color:var(--gold)}
+.s-desc{color:var(--muted);font-size:1rem;line-height:1.65;max-width:480px;margin-top:10px}
+
+/* ===================== PROMOS ===================== */
+.promo-bg{background:var(--bg)}
+.promo-grid{
+  display:grid;
+  grid-template-columns:1.8fr 1fr 1fr;
+  gap:18px;margin-top:44px;
+}
+
+.promo-card{
+  border-radius:10px;overflow:hidden;
+  position:relative;cursor:pointer;
+  transition:transform .3s,box-shadow .3s;
+}
+.promo-card:hover{transform:translateY(-5px)}
+
+.pc-inner{
+  padding:36px 32px 32px;
+  min-height:220px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:hidden;
+}
+
+.promo-card.featured .pc-inner{
+  min-height:280px;
+  background:linear-gradient(140deg,#0D0520 0%,#2A0F5A 50%,#4A1C8C 100%);
+  border:1px solid rgba(138,43,226,.4);
+}
+.promo-card.gold-card .pc-inner{
+  background:linear-gradient(140deg,#120900 0%,#3D2000 50%,#7A4500 100%);
+  border:1px solid rgba(245,197,24,.25);
+}
+.promo-card.teal-card .pc-inner{
+  background:linear-gradient(140deg,#001512 0%,#003D35 50%,#006B5A 100%);
+  border:1px solid rgba(0,229,204,.25);
+}
+.promo-card:hover .pc-inner{box-shadow:0 30px 60px rgba(0,0,0,.5)}
+
+.pc-deco{
+  position:absolute;right:-15px;top:-15px;
+  font-size:9rem;opacity:.07;
+  user-select:none;pointer-events:none;
+  transform:rotate(10deg);
+}
+
+.pc-tag{
+  display:inline-block;padding:4px 12px;
+  background:rgba(255,255,255,.08);border-radius:3px;
+  font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.6);margin-bottom:14px;width:fit-content;
+}
+
+.pc-amount{
+  font-family:'Bebas Neue',sans-serif;
+  line-height:1;letter-spacing:1px;margin-bottom:6px;
+}
+.promo-card.featured .pc-amount{font-size:4rem;color:#fff}
+.promo-card.gold-card .pc-amount{font-size:2.8rem;color:var(--gold)}
+.promo-card.teal-card .pc-amount{font-size:2.8rem;color:var(--teal)}
+
+.pc-title{font-size:1rem;font-weight:600;letter-spacing:.5px;margin-bottom:4px}
+.pc-sub{font-size:.8rem;color:var(--muted)}
+
+.pc-btn{
+  position:absolute;top:20px;right:20px;
+  padding:8px 20px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));
+  color:#000;border:none;border-radius:3px;
+  font-family:'Rajdhani',sans-serif;font-weight:700;
+  font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:opacity .2s;
+}
+.pc-btn:hover{opacity:.85}
+
+/* ===================== GAMES ===================== */
+.games-bg{background:var(--bg2)}
+
+.filter-row{
+  display:flex;gap:8px;margin:36px 0 28px;flex-wrap:wrap;
+  align-items:center;
+}
+.filter-btn{
+  padding:8px 20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border2);
+  color:var(--muted);
+  font-family:'Rajdhani',sans-serif;font-weight:600;
+  font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;
+  border-radius:3px;cursor:pointer;transition:all .25s;
+}
+.filter-btn:hover,.filter-btn.active{
+  background:rgba(245,197,24,.1);
+  border-color:rgba(245,197,24,.5);
+  color:var(--gold);
+}
+.filter-sep{flex:1}
+.see-all{
+  color:var(--muted);font-size:.8rem;font-weight:600;
+  letter-spacing:1px;text-decoration:none;
+  transition:color .25s;
+  display:flex;align-items:center;gap:6px;
+}
+.see-all:hover{color:var(--gold)}
+
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.game-card{
+  background:var(--card);border-radius:8px;overflow:hidden;
+  border:1px solid var(--border2);cursor:pointer;
+  transition:all .3s;position:relative;
+}
+.game-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(245,197,24,.3);
+  box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 30px rgba(245,197,24,.04);
+}
+
+.game-thumb{
+  width:100%;height:145px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3.2rem;position:relative;overflow:hidden;
+}
+.game-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.7) 100%);
+}
+
+.game-hover{
+  position:absolute;inset:0;z-index:2;
+  background:rgba(0,0,0,.75);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s;
+}
+.game-card:hover .game-hover{opacity:1}
+.g-play-btn{
+  padding:10px 28px;
+  background:linear-gradient(135deg,var(--gold),var(--amber));
+  color:#000;border:none;border-radius:3px;
+  font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;
+  cursor:pointer;transform:translateY(8px);transition:transform .3s;
+}
+.game-card:hover .g-play-btn{transform:translateY(0)}
+
+.game-info{padding:12px 14px 14px}
+.game-name{
+  font-size:.88rem;font-weight:600;letter-spacing:.3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;
+}
+.game-meta-row{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.game-provider{font-size:.65rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.game-rtp{font-size:.65rem;color:var(--teal);font-weight:700}
+
+.gbadge{
+  position:absolute;top:8px;left:8px;z-index:3;
+  padding:3px 9px;border-radius:2px;
+  font-size:.58rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+}
+.gbadge-hot{background:var(--pink);color:#fff}
+.gbadge-new{background:var(--teal);color:#000}
+.gbadge-jackpot{background:linear-gradient(90deg,var(--gold),var(--amber));color:#000}
+
+/* jackpot amount on card */
+.jackpot-on-card{
+  position:absolute;bottom:52px;left:0;right:0;z-index:3;
+  text-align:center;
+  font-family:'Bebas Neue',sans-serif;font-size:1.4rem;
+  color:var(--gold);letter-spacing:2px;
+  text-shadow:0 0 20px rgba(245,197,24,.8);
+}
+
+/* ===================== SPORTS STRIP ===================== */
+.sports-bg{background:var(--bg)}
+
+.sports-tabs{
+  display:flex;gap:0;margin:36px 0 28px;
+  border-bottom:1px solid var(--border2);
+}
+.stab{
+  padding:12px 24px;
+  font-size:.82rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;border:none;background:transparent;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all .25s;display:flex;align-items:center;gap:8px;
+}
+.stab:hover{color:var(--white)}
+.stab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.matches-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+}
+.match-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:8px;padding:20px 22px;
+  cursor:pointer;transition:all .3s;
+}
+.match-card:hover{
+  border-color:rgba(245,197,24,.2);
+  transform:translateX(3px);
+}
+
+.match-top{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+}
+.match-league{
+  font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);display:flex;align-items:center;gap:8px;
+}
+.live-dot{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,45,85,.12);border:1px solid rgba(255,45,85,.3);
+  padding:3px 10px;border-radius:100px;
+  font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--pink);
+}
+.live-dot::before{
+  content:'';width:5px;height:5px;background:var(--pink);
+  border-radius:50%;animation:blink 1.5s infinite;
+}
+
+.match-teams-row{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  margin-bottom:14px;
+}
+.team-info{flex:1}
+.team-name{font-size:.95rem;font-weight:600;letter-spacing:.3px;margin-bottom:2px}
+.team-detail{font-size:.68rem;color:var(--muted)}
+.vs-score{
+  text-align:center;
+  font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;
+  color:var(--gold);line-height:1;
+  padding:0 16px;
+}
+.vs-score small{display:block;font-size:.6rem;color:var(--muted);letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:600;text-transform:uppercase}
+
+.odds-strip{display:flex;gap:6px}
+.odd-box{
+  flex:1;padding:8px 6px;text-align:center;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:3px;cursor:pointer;transition:all .25s;
+}
+.odd-box:hover{background:rgba(245,197,24,.1);border-color:rgba(245,197,24,.4)}
+.odd-val{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--teal);letter-spacing:1px}
+.odd-type{display:block;font-size:.6rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+/* ===================== TRUST STRIP ===================== */
+.trust-bg{
+  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+  padding:50px 60px;
+}
+.trust-inner{
+  max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
+}
+.trust-item{
+  display:flex;align-items:flex-start;gap:16px;
+  padding:22px;background:var(--card);
+  border:1px solid var(--border2);border-radius:8px;
+  transition:border-color .3s;
+}
+.trust-item:hover{border-color:rgba(245,197,24,.2)}
+.trust-icon{
+  font-size:1.8rem;width:48px;height:48px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(245,197,24,.08);border-radius:6px;flex-shrink:0;
+}
+.trust-title{font-size:.95rem;font-weight:700;letter-spacing:.5px;margin-bottom:4px}
+.trust-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+/* ===================== PAYMENTS ===================== */
+.payments-bg{background:var(--bg2);padding:55px 60px}
+.payments-inner{max-width:1400px;margin:0 auto}
+.pay-heading{
+  text-align:center;
+  font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;
+  color:var(--muted);margin-bottom:32px;
+}
+.pay-heading span{color:var(--gold)}
+.pay-logos{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+}
+.pay-logo{
+  padding:12px 26px;
+  background:var(--card);
+  border:1px solid var(--border2);border-radius:4px;
+  font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;
+  color:var(--muted);cursor:pointer;
+  transition:all .25s;min-width:110px;text-align:center;
+}
+.pay-logo:hover{border-color:rgba(245,197,24,.3);color:var(--white)}
+
+/* ===================== FOOTER ===================== */
+footer{
+  background:#030508;
+  border-top:1px solid rgba(245,197,24,.1);
+  padding:70px 60px 30px;
+}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{
+  display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;
+  gap:60px;margin-bottom:60px;
+}
+.f-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:4px;
+  background:linear-gradient(120deg,var(--gold),var(--amber),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;margin-bottom:16px;
+}
+.f-desc{font-size:.82rem;color:var(--muted);line-height:1.75;margin-bottom:22px}
+.f-resp{
+  display:flex;align-items:center;gap:10px;
+  font-size:.75rem;color:var(--muted);
+}
+.age18{
+  width:36px;height:36px;border-radius:50%;
+  border:2px solid var(--pink);color:var(--pink);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.8rem;flex-shrink:0;
+}
+.f-col h4{
+  font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:2px;
+  color:var(--gold);margin-bottom:20px;
+}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+.f-links a{
+  color:var(--muted);text-decoration:none;font-size:.83rem;
+  transition:color .25s;letter-spacing:.3px;
+}
+.f-links a:hover{color:var(--white)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.05);
+  padding-top:26px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.72rem;color:var(--muted);flex-wrap:wrap;gap:14px;
+}
+.f-badges{display:flex;gap:10px;flex-wrap:wrap}
+.f-badge{
+  padding:4px 12px;
+  border:1px solid rgba(255,255,255,.08);border-radius:2px;
+  font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;
+}
+
+/* ===================== REVEAL ANIMATIONS ===================== */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.rv.visible{opacity:1;transform:translateY(0)}
+.rv-l{opacity:0;transform:translateX(-24px);transition:opacity .7s,transform .7s}
+.rv-l.visible{opacity:1;transform:translateX(0)}
+.rv-r{opacity:0;transform:translateX(24px);transition:opacity .7s,transform .7s}
+.rv-r.visible{opacity:1;transform:translateX(0)}
+
+/* delay helpers */
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+.d4{transition-delay:.4s}.d5{transition-delay:.5s}
+
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:1100px){
+  .games-grid{grid-template-columns:repeat(3,1fr)}
+  .hero-inner{grid-template-columns:1fr;padding:0 40px}
+  .hero-right{display:none}
+  .promo-grid{grid-template-columns:1fr 1fr}
+  .promo-card.featured{grid-column:span 2}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .trust-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .navbar{padding:0 20px}
+  .nav-menu{display:none}
+  .hero-inner,.section,.trust-bg,.payments-bg,footer{padding-left:20px;padding-right:20px}
+  .section-full .section-inner{padding:0 20px}
+  .games-grid{grid-template-columns:repeat(2,1fr)}
+  .promo-grid{grid-template-columns:1fr}
+  .promo-card.featured{grid-column:span 1}
+  .matches-grid{grid-template-columns:1fr}
+  .trust-inner{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== NAVBAR ======================== -->
+<nav class="navbar" id="navbar">
+  <a class="nav-logo" href="#">VeluxPlay</a>
+  <ul class="nav-menu">
+    <li><a href="#" class="active">Casino</a></li>
+    <li><a href="#">Live Casino</a></li>
+    <li><a href="#">Sports</a></li>
+    <li><a href="#">Poker</a></li>
+    <li><a href="#">Promotions</a></li>
+    <li><a href="#">VIP</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-ghost">Log In</button>
+    <button class="btn-primary">Join Now</button>
+  </div>
+</nav>
+
+<!-- ======================== HERO ======================== -->
+<section class="hero">
+  <div class="hero-beam"></div>
+  <div class="hero-beam2"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-inner">
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="hero-pill"><span class="dot"></span> Licensed & Trusted Since 2018</div>
+      <h1 class="hero-h1">
+        <span class="line-gold">Fortune</span><br>
+        <span class="line-outline">Favours</span><br>
+        <span class="line-white">The Bold.</span>
+      </h1>
+      <p class="hero-desc">Join over 3 million players. Claim up to $10,000 in welcome bonuses across 6,000+ premium casino games and live sports markets.</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-num">6,000+</span>
+          <span class="hstat-label">Games</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num">$10K</span>
+          <span class="hstat-label">Welcome Bonus</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num">3M+</span>
+          <span class="hstat-label">Players</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num">24/7</span>
+          <span class="hstat-label">Support</span>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-hero-main">Claim Bonus Now</button>
+        <button class="btn-hero-ghost">
+          <span class="play-icon">▶</span>
+          Explore Games
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Visual -->
+    <div class="hero-right">
+      <div class="casino-visual">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="glow-coin">777</div>
+
+        <div class="mini-card mc1">
+          <div class="mc-badge hot">HOT</div>
+          <div class="mc-label">Jackpot Prize</div>
+          <div class="mc-value gold" id="jackpot-counter">$2,481,330</div>
+        </div>
+        <div class="mini-card mc2">
+          <div class="mc-badge live">LIVE</div>
+          <div class="mc-label">Active Players</div>
+          <div class="mc-value teal">12,847</div>
+        </div>
+        <div class="mini-card mc3">
+          <div class="mc-label">Last Winner</div>
+          <div class="mc-value" style="font-size:1rem">Player_Mx92</div>
+          <div class="mc-value pink">+$48,200</div>
+        </div>
+        <div class="mini-card mc4">
+          <div class="mc-label">Today's Payouts</div>
+          <div class="mc-value gold">$1.8M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== TICKER ======================== -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ======================== PROMOTIONS ======================== -->
+<div class="promo-bg">
+  <div class="section">
+    <div class="s-eyebrow rv">Exclusive Offers</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="s-title rv d1">Latest <span class="g">Promotions</span></div>
+        <div class="s-desc rv d2">Fresh bonuses updated every week for new and loyal players</div>
+      </div>
+      <a href="#" class="see-all rv d2">View All Offers →</a>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-card featured rv d1">
+        <div class="pc-inner">
+          <div class="pc-deco">🎰</div>
+          <button class="pc-btn">Claim Now</button>
+          <div class="pc-tag">Welcome Package</div>
+          <div class="pc-amount">$10,000</div>
+          <div class="pc-title">5-Deposit Welcome Bonus</div>
+          <div class="pc-sub">100% match + 500 Free Spins on first 5 deposits</div>
+        </div>
+      </div>
+      <div class="promo-card gold-card rv d2">
+        <div class="pc-inner">
+          <div class="pc-deco">👑</div>
+          <div class="pc-tag">VIP Loyalty</div>
+          <div class="pc-amount">15% Cashback</div>
+          <div class="pc-title">Weekly VIP Cashback</div>
+          <div class="pc-sub">Up to $3,000 every Monday</div>
+        </div>
+      </div>
+      <div class="promo-card teal-card rv d3">
+        <div class="pc-inner">
+          <div class="pc-deco">⚽</div>
+          <div class="pc-tag">Sports Special</div>
+          <div class="pc-amount">Odds +30%</div>
+          <div class="pc-title">Weekend Sports Boost</div>
+          <div class="pc-sub">Enhanced odds on all weekend fixtures</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== GAMES ======================== -->
+<div class="games-bg">
+  <div class="section">
+    <div class="s-eyebrow rv">Game Library</div>
+    <div class="s-title rv d1">Top <span class="g">Casino Games</span></div>
+    <div class="s-desc rv d2">6,000+ titles from NetEnt, Evolution, Microgaming, Play'n GO and more</div>
+    <div class="filter-row rv d3">
+      <button class="filter-btn active">🔥 Hot</button>
+      <button class="filter-btn">🆕 New</button>
+      <button class="filter-btn">🎰 Slots</button>
+      <button class="filter-btn">🃏 Live</button>
+      <button class="filter-btn">🎲 Table</button>
+      <button class="filter-btn">💎 Jackpot</button>
+      <button class="filter-btn">🃏 Poker</button>
+      <div class="filter-sep"></div>
+      <a href="#" class="see-all">Browse All 6,000+ →</a>
+    </div>
+
+    <div class="games-grid">
+      <!-- 10 game cards -->
+      <div class="game-card rv d1">
+        <span class="gbadge gbadge-jackpot">JACKPOT</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0D0520,#4A1C8C)">🎰
+          <div class="jackpot-on-card" id="jc1">$2.48M</div>
+        </div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Mega Fortune Dreams</div>
+          <div class="game-meta-row"><span class="game-provider">NetEnt</span><span class="game-rtp">96.8%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d2">
+        <span class="gbadge gbadge-hot">HOT</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#001F38,#005A8C)">🃏</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Lightning Baccarat</div>
+          <div class="game-meta-row"><span class="game-provider">Evolution</span><span class="game-rtp">98.9%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d3">
+        <span class="gbadge gbadge-new">NEW</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1A1000,#8B5000)">🎲</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Lightning Roulette</div>
+          <div class="game-meta-row"><span class="game-provider">Evolution</span><span class="game-rtp">97.3%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d4">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0A1800,#2A5000)">🂡</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Infinite Blackjack</div>
+          <div class="game-meta-row"><span class="game-provider">Evolution</span><span class="game-rtp">99.5%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d5">
+        <span class="gbadge gbadge-hot">HOT</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#150020,#600080)">🐉</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Dragon Tiger</div>
+          <div class="game-meta-row"><span class="game-provider">Playtech</span><span class="game-rtp">96.3%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d1">
+        <span class="gbadge gbadge-new">NEW</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#001818,#005050)">🎯</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Aviator Pro</div>
+          <div class="game-meta-row"><span class="game-provider">Spribe</span><span class="game-rtp">97.0%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d2">
+        <span class="gbadge gbadge-hot">HOT</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#180A00,#6B3500)">🍒</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Book of Dead</div>
+          <div class="game-meta-row"><span class="game-provider">Play'n GO</span><span class="game-rtp">96.2%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d3">
+        <div class="game-thumb" style="background:linear-gradient(135deg,#0A0018,#350060)">🌙</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Moon Princess</div>
+          <div class="game-meta-row"><span class="game-provider">Play'n GO</span><span class="game-rtp">96.5%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d4">
+        <span class="gbadge gbadge-jackpot">JACKPOT</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#001500,#004A00)">🍀</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Mega Moolah</div>
+          <div class="game-meta-row"><span class="game-provider">Microgaming</span><span class="game-rtp">96.0%</span></div>
+        </div>
+      </div>
+      <div class="game-card rv d5">
+        <span class="gbadge gbadge-new">NEW</span>
+        <div class="game-thumb" style="background:linear-gradient(135deg,#1A0500,#7A2000)">🎪</div>
+        <div class="game-hover"><button class="g-play-btn">PLAY NOW</button></div>
+        <div class="game-info">
+          <div class="game-name">Gonzo's Quest</div>
+          <div class="game-meta-row"><span class="game-provider">NetEnt</span><span class="game-rtp">96.0%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== SPORTS ======================== -->
+<div class="sports-bg">
+  <div class="section">
+    <div class="s-eyebrow rv">Live Betting</div>
+    <div class="s-title rv d1">Live <span class="g">Sports Markets</span></div>
+    <div class="s-desc rv d2">Thousands of live events daily with the industry's best odds</div>
+    <div class="sports-tabs rv d3">
+      <button class="stab active">⚽ Football</button>
+      <button class="stab">🏀 Basketball</button>
+      <button class="stab">🎾 Tennis</button>
+      <button class="stab">🏈 NFL</button>
+      <button class="stab">🏇 Racing</button>
+    </div>
+    <div class="matches-grid">
+      <div class="match-card rv d1">
+        <div class="match-top">
+          <div class="match-league">⚽ UEFA Champions League</div>
+          <div class="live-dot">Live 67'</div>
+        </div>
+        <div class="match-teams-row">
+          <div class="team-info"><div class="team-name">Real Madrid</div><div class="team-detail">Home · La Liga</div></div>
+          <div class="vs-score">2<span style="color:var(--muted);font-size:1.2rem">–</span>1<small>FT</small></div>
+          <div class="team-info" style="text-align:right"><div class="team-name">Man City</div><div class="team-detail">Away · PL</div></div>
+        </div>
+        <div class="odds-strip">
+          <div class="odd-box"><span class="odd-val">1.85</span><span class="odd-type">Real</span></div>
+          <div class="odd-box"><span class="odd-val">3.40</span><span class="odd-type">Draw</span></div>
+          <div class="odd-box"><span class="odd-val">4.20</span><span class="odd-type">City</span></div>
+        </div>
+      </div>
+      <div class="match-card rv d2">
+        <div class="match-top">
+          <div class="match-league">⚽ Premier League</div>
+          <div class="live-dot">Live 34'</div>
+        </div>
+        <div class="match-teams-row">
+          <div class="team-info"><div class="team-name">Arsenal</div><div class="team-detail">Home · PL</div></div>
+          <div class="vs-score">1<span style="color:var(--muted);font-size:1.2rem">–</span>0<small>HT</small></div>
+          <div class="team-info" style="text-align:right"><div class="team-name">Chelsea</div><div class="team-detail">Away · PL</div></div>
+        </div>
+        <div class="odds-strip">
+          <div class="odd-box"><span class="odd-val">2.10</span><span class="odd-type">Arsenal</span></div>
+          <div class="odd-box"><span class="odd-val">3.20</span><span class="odd-type">Draw</span></div>
+          <div class="odd-box"><span class="odd-val">3.50</span><span class="odd-type">Chelsea</span></div>
+        </div>
+      </div>
+      <div class="match-card rv d3">
+        <div class="match-top">
+          <div class="match-league">⚽ La Liga</div>
+          <div class="live-dot">Live 51'</div>
+        </div>
+        <div class="match-teams-row">
+          <div class="team-info"><div class="team-name">Barcelona</div><div class="team-detail">Home · La Liga</div></div>
+          <div class="vs-score">3<span style="color:var(--muted);font-size:1.2rem">–</span>2<small>2H</small></div>
+          <div class="team-info" style="text-align:right"><div class="team-name">Atletico</div><div class="team-detail">Away · La Liga</div></div>
+        </div>
+        <div class="odds-strip">
+          <div class="odd-box"><span class="odd-val">1.65</span><span class="odd-type">Barca</span></div>
+          <div class="odd-box"><span class="odd-val">4.00</span><span class="odd-type">Draw</span></div>
+          <div class="odd-box"><span class="odd-val">5.50</span><span class="odd-type">Atletico</span></div>
+        </div>
+      </div>
+      <div class="match-card rv d4">
+        <div class="match-top">
+          <div class="match-league">⚽ Serie A</div>
+          <div class="live-dot">Live 78'</div>
+        </div>
+        <div class="match-teams-row">
+          <div class="team-info"><div class="team-name">AC Milan</div><div class="team-detail">Home · SA</div></div>
+          <div class="vs-score">0<span style="color:var(--muted);font-size:1.2rem">–</span>0<small>2H</small></div>
+          <div class="team-info" style="text-align:right"><div class="team-name">Inter</div><div class="team-detail">Away · SA</div></div>
+        </div>
+        <div class="odds-strip">
+          <div class="odd-box"><span class="odd-val">2.80</span><span class="odd-type">Milan</span></div>
+          <div class="odd-box"><span class="odd-val">2.90</span><span class="odd-type">Draw</span></div>
+          <div class="odd-box"><span class="odd-val">2.70</span><span class="odd-type">Inter</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== TRUST ======================== -->
+<div class="trust-bg">
+  <div class="trust-inner">
+    <div class="trust-item rv d1">
+      <div class="trust-icon">⚡</div>
+      <div><div class="trust-title">Instant Withdrawals</div><div class="trust-desc">Get your winnings within minutes via crypto or e-wallets</div></div>
+    </div>
+    <div class="trust-item rv d2">
+      <div class="trust-icon">🔐</div>
+      <div><div class="trust-title">Bank-Level Security</div><div class="trust-desc">256-bit SSL encryption protecting all your data and funds</div></div>
+    </div>
+    <div class="trust-item rv d3">
+      <div class="trust-icon">🏆</div>
+      <div><div class="trust-title">Licensed & Regulated</div><div class="trust-desc">MGA and Curacao eGaming licensed for fair play guarantee</div></div>
+    </div>
+    <div class="trust-item rv d4">
+      <div class="trust-icon">💬</div>
+      <div><div class="trust-title">24/7 Live Support</div><div class="trust-desc">Expert support team available around the clock via live chat</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAYMENTS ======================== -->
+<div class="payments-bg">
+  <div class="payments-inner">
+    <div class="pay-heading rv">Accepted <span>Payment Methods</span></div>
+    <div class="pay-logos rv d2">
+      <div class="pay-logo">VISA</div>
+      <div class="pay-logo">MasterCard</div>
+      <div class="pay-logo">PayPal</div>
+      <div class="pay-logo">Skrill</div>
+      <div class="pay-logo">Neteller</div>
+      <div class="pay-logo">Bitcoin</div>
+      <div class="pay-logo">Ethereum</div>
+      <div class="pay-logo">USDT</div>
+      <div class="pay-logo">Bank Wire</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== FOOTER ======================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <span class="f-logo">VeluxPlay</span>
+        <p class="f-desc">VeluxPlay is a fully licensed and regulated online gaming platform. We are committed to providing a safe, fair, and entertaining experience to players worldwide. Please gamble responsibly.</p>
+        <div class="f-resp">
+          <div class="age18">18+</div>
+          <span>Gambling can be addictive. Please play responsibly and within your limits.</span>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Casino</h4>
+        <ul class="f-links">
+          <li><a href="#">All Games</a></li>
+          <li><a href="#">Slots</a></li>
+          <li><a href="#">Live Casino</a></li>
+          <li><a href="#">Table Games</a></li>
+          <li><a href="#">Jackpots</a></li>
+          <li><a href="#">Poker</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Sports</h4>
+        <ul class="f-links">
+          <li><a href="#">Football</a></li>
+          <li><a href="#">Basketball</a></li>
+          <li><a href="#">Tennis</a></li>
+          <li><a href="#">Horse Racing</a></li>
+          <li><a href="#">Esports</a></li>
+          <li><a href="#">Virtual Sports</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Help</h4>
+        <ul class="f-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Live Chat</a></li>
+          <li><a href="#">Responsible Gaming</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 VeluxPlay. All rights reserved. Licensed & Regulated.</div>
+      <div class="f-badges">
+        <div class="f-badge">MGA Licensed</div>
+        <div class="f-badge">Curacao eGaming</div>
+        <div class="f-badge">SSL Secured</div>
+        <div class="f-badge">RNG Certified</div>
+        <div class="f-badge">GamCare</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ----- PARTICLES ----- */
+(function(){
+  const container = document.getElementById('particles');
+  const colors = ['rgba(245,197,24,.7)','rgba(255,140,0,.6)','rgba(0,229,204,.5)','rgba(255,45,85,.4)'];
+  for(let i=0;i<30;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random()*4+2;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      box-shadow:0 0 ${size*3}px currentColor;
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+/* ----- TICKER ----- */
+(function(){
+  const wins = [
+    {icon:'🎰',name:'Player_Mx92',game:'Mega Fortune',amount:'$48,200'},
+    {icon:'🃏',name:'Lucky_Star88',game:'Baccarat VIP',amount:'$12,750'},
+    {icon:'⚽',name:'BetKing_Pro',game:'Champions League',amount:'$5,400'},
+    {icon:'🎲',name:'RouletteAce',game:'Lightning Roulette',amount:'$22,100'},
+    {icon:'🍀',name:'JackpotHero',game:'Mega Moolah',amount:'$1,200,000'},
+    {icon:'🐉',name:'DragonWin',game:'Dragon Tiger',amount:'$8,900'},
+    {icon:'🎯',name:'AviatorX',game:'Aviator Pro',amount:'$15,600'},
+    {icon:'💎',name:'VIP_Player1',game:'Blackjack',amount:'$30,000'},
+  ];
+  const track = document.getElementById('ticker');
+  // double for seamless loop
+  let html = '';
+  [wins,wins].forEach(arr => arr.forEach(w => {
+    html += `<div class="ticker-item">
+      <span class="ti-icon">${w.icon}</span>
+      <span class="ti-name">${w.name}</span>
+      <span class="ti-won">won</span>
+      <span class="ti-amount">${w.amount}</span>
+      <span class="ti-won">on ${w.game}</span>
+    </div>`;
+  }));
+  track.innerHTML = html;
+})();
+
+/* ----- JACKPOT COUNTER ----- */
+let jackpot = 2481330;
+setInterval(()=>{
+  jackpot += Math.floor(Math.random()*120)+20;
+  const f = '$'+jackpot.toLocaleString('en-US');
+  const el = document.getElementById('jackpot-counter');
+  const el2 = document.getElementById('jc1');
+  if(el) el.textContent = f;
+  if(el2) el2.textContent = '$'+(jackpot/1000000).toFixed(3)+'M';
+},900);
+
+/* ----- SCROLL REVEAL ----- */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')});
+},{threshold:0.08});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>observer.observe(el));
+
+/* ----- FILTER TABS ----- */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    this.closest('.filter-row').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.querySelectorAll('.stab').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+/* ----- NAV SCROLL ----- */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+});
+</script>
+</body>
+</html>
