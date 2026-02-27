@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeluxPlay – Live Casino</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #06080F;
+  --bg2:   #0E1422;
+  --bg3:   #121B30;
+  --card:  #111827;
+  --card2: #182035;
+  --gold:  #F5C518;
+  --amber: #FF8C00;
+  --teal:  #00E5CC;
+  --pink:  #FF2D55;
+  --white: #F0F2F5;
+  --muted: #6B7A99;
+  --border: rgba(245,197,24,0.12);
+  --border2: rgba(255,255,255,0.06);
+  --green: #0D4A2A;
+  --felt:  #0A3D22;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
+
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.4;
+}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--amber))}
+
+/* ── NAVBAR ── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  background:rgba(6,8,15,0.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(24px);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:4px;
+  text-decoration:none;
+  background:linear-gradient(120deg,var(--gold),var(--amber),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-menu{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-menu a{
+  color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:600;
+  letter-spacing:1.8px;text-transform:uppercase;transition:color .25s;
+  position:relative;padding-bottom:4px;
+}
+.nav-menu a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .3s}
+.nav-menu a:hover{color:var(--white)}
+.nav-menu a.active{color:var(--gold)}
+.nav-menu a.active::after{width:100%}
+.nav-actions{display:flex;gap:10px}
+.btn-ghost{padding:9px 22px;background:transparent;border:1px solid rgba(245,197,24,.35);color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all .25s}
+.btn-ghost:hover{background:rgba(245,197,24,.08)}
+.btn-primary{padding:9px 26px;background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;border-radius:3px;transition:opacity .25s}
+.btn-primary:hover{opacity:.85}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:92vh;display:flex;align-items:center;
+  padding-top:68px;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(180,30,50,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 20% 70%, rgba(245,197,24,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,229,204,0.04) 0%, transparent 60%),
+    linear-gradient(180deg,#06080F 0%,#0A0F1E 100%);
+}
+/* card suit pattern */
+.hero-suits{
+  position:absolute;inset:0;
+  font-size:4rem;color:rgba(245,197,24,0.03);
+  display:grid;grid-template-columns:repeat(12,1fr);
+  align-content:start;gap:40px;padding:20px;
+  pointer-events:none;user-select:none;overflow:hidden;
+}
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(245,197,24,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,197,24,0.025) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);
+  pointer-events:none;
+}
+.hero-inner{
+  position:relative;z-index:2;max-width:1400px;margin:0 auto;
+  padding:0 60px;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 18px;background:rgba(255,45,85,0.1);
+  border:1px solid rgba(255,45,85,0.3);border-radius:100px;
+  font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--pink);margin-bottom:24px;
+  animation:fadeUp .7s .1s both;
+}
+.hero-pill .dot{width:7px;height:7px;background:var(--pink);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--pink)}50%{opacity:.3;box-shadow:none}}
+
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,6vw,6.5rem);line-height:.92;letter-spacing:2px;animation:fadeUp .7s .2s both}
+.line-gold{background:linear-gradient(90deg,var(--gold),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.line-outline{-webkit-text-stroke:1.5px rgba(245,197,24,0.4);color:transparent}
+.line-white{color:var(--white)}
+
+.hero-desc{margin-top:18px;font-size:1rem;color:var(--muted);line-height:1.65;max-width:440px;animation:fadeUp .7s .3s both}
+
+.hero-stats{display:flex;gap:0;margin:28px 0;animation:fadeUp .7s .4s both}
+.hstat{flex:1;padding:16px 18px;border-left:1px solid var(--border2)}
+.hstat:first-child{border-left:none;padding-left:0}
+.hstat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;letter-spacing:1px}
+.hstat-label{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+.hero-btns{display:flex;gap:14px;animation:fadeUp .7s .5s both}
+.btn-hero-main{padding:14px 38px;background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;border:none;border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2.5px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s}
+.btn-hero-main:hover{transform:translateY(-2px)}
+.btn-hero-main::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-hero-main:hover::after{transform:translateX(100%)}
+.btn-hero-ghost{padding:14px 34px;background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--white);border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2.5px;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:10px}
+.btn-hero-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.play-circle{width:28px;height:28px;border-radius:50%;border:1px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+
+/* hero right — dealer visual */
+.hero-right{display:flex;align-items:center;justify-content:center;animation:fadeUp .7s .3s both}
+.dealer-visual{
+  position:relative;width:440px;height:460px;
+  background:radial-gradient(ellipse at center,rgba(13,74,42,0.5) 0%,transparent 70%);
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.felt-table{
+  width:380px;height:280px;
+  background:linear-gradient(135deg,#0D4A2A,#0A3D22,#062B18);
+  border-radius:50%;
+  border:4px solid rgba(245,197,24,0.3);
+  box-shadow:0 0 60px rgba(0,150,60,0.2),0 0 120px rgba(0,100,40,0.1),inset 0 0 40px rgba(0,0,0,0.5);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.felt-table::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,0.01) 0px,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 10px);
+}
+.felt-center{text-align:center}
+.felt-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:rgba(245,197,24,0.3)}
+.felt-cards{font-size:3rem;margin-top:8px;letter-spacing:8px}
+.felt-line{width:120px;height:1px;background:rgba(245,197,24,0.2);margin:10px auto}
+
+/* floating result dots */
+.result-dots{
+  position:absolute;top:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;
+}
+.rdot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:white}
+.rdot.red{background:#CC2222}
+.rdot.blk{background:#222222;border:1px solid #555}
+
+/* floating mini cards around table */
+.dealer-card{
+  position:absolute;background:var(--card2);
+  border:1px solid rgba(245,197,24,0.2);border-radius:8px;
+  padding:10px 14px;box-shadow:0 10px 30px rgba(0,0,0,.5);
+  white-space:nowrap;
+}
+.dc1{top:10px;left:-40px;animation:dcFloat1 5s ease-in-out infinite}
+.dc2{top:20px;right:-30px;animation:dcFloat2 6s ease-in-out infinite}
+.dc3{bottom:40px;left:-20px;animation:dcFloat3 4.5s ease-in-out infinite}
+.dc4{bottom:30px;right:-10px;animation:dcFloat4 7s ease-in-out infinite}
+@keyframes dcFloat1{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(-3deg)}}
+@keyframes dcFloat2{0%,100%{transform:translateY(0) rotate(3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+@keyframes dcFloat3{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(-2deg)}}
+@keyframes dcFloat4{0%,100%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(-16px) rotate(4deg)}}
+.dc-label{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.dc-val{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1px}
+.dc-val.gold{color:var(--gold)}
+.dc-val.teal{color:var(--teal)}
+.dc-val.pink{color:var(--pink)}
+.dc-badge{display:inline-block;padding:2px 8px;border-radius:2px;font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.dc-badge.live{background:var(--pink);color:white}
+.dc-badge.vip{background:linear-gradient(90deg,var(--gold),var(--amber));color:#000}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TICKER ── */
+.ticker-wrap{background:rgba(255,45,85,.06);border-top:1px solid rgba(255,45,85,.15);border-bottom:1px solid rgba(255,45,85,.15);padding:11px 0;overflow:hidden;position:relative}
+.ticker-wrap::before,.ticker-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.ticker-track{display:flex;animation:tickerScroll 30s linear infinite;width:max-content}
+.ticker-item{display:flex;align-items:center;gap:10px;font-size:.75rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:0 28px;border-right:1px solid rgba(255,45,85,.1)}
+.ti-name{color:var(--muted)}.ti-won{color:var(--white)}.ti-amount{color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1.1rem}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTION BASE ── */
+.section{padding:80px 60px;max-width:1400px;margin:0 auto}
+.section-bg2{background:var(--bg2)}
+.section-bg3{background:var(--bg)}
+
+.eyebrow{font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px}
+.eyebrow.pink{color:var(--pink)}
+.s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3.2rem);letter-spacing:2px;line-height:1;margin-bottom:8px}
+.s-title .g{color:var(--gold)}
+.s-desc{color:var(--muted);font-size:1rem;line-height:1.6;max-width:500px}
+
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px}
+.see-all{color:var(--muted);font-size:.8rem;font-weight:600;letter-spacing:1px;text-decoration:none;transition:color .25s;display:flex;align-items:center;gap:6px}
+.see-all:hover{color:var(--gold)}
+
+/* ── FILTER TABS ── */
+.filter-bar{
+  background:rgba(14,20,34,0.95);
+  border-bottom:1px solid var(--border2);
+  position:sticky;top:68px;z-index:100;
+  backdrop-filter:blur(20px);
+}
+.filter-inner{max-width:1400px;margin:0 auto;padding:0 60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.filter-tabs{display:flex;gap:0}
+.ftab{
+  padding:16px 22px;background:transparent;border:none;border-bottom:2px solid transparent;
+  color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:600;
+  font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;margin-bottom:-1px;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.ftab:hover{color:var(--white)}
+.ftab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.sort-select{
+  padding:8px 16px;background:var(--card);border:1px solid var(--border2);
+  color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.8rem;
+  border-radius:3px;cursor:pointer;outline:none;
+}
+
+/* ── FEATURED TABLE ── */
+.featured-wrap{padding:0 60px;max-width:1400px;margin:0 auto;padding-bottom:60px}
+.featured-card{
+  background:linear-gradient(135deg,#0A2A14,#0D4A22,#0A3D1E);
+  border:1px solid rgba(245,197,24,0.25);border-radius:12px;
+  padding:32px 36px;position:relative;overflow:hidden;
+  box-shadow:0 0 60px rgba(0,150,60,0.1);
+}
+.featured-card::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,0.008) 0px,rgba(255,255,255,0.008) 1px,transparent 1px,transparent 12px);
+  pointer-events:none;
+}
+.featured-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.featured-left{display:flex;align-items:center;gap:16px}
+.live-pill{display:flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(255,45,85,.15);border:1px solid rgba(255,45,85,.35);border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pink)}
+.live-pill::before{content:'';width:6px;height:6px;background:var(--pink);border-radius:50%;animation:blink 1.5s infinite}
+.featured-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;color:var(--white)}
+.featured-sub{color:var(--muted);font-size:.85rem}
+.btn-join{padding:12px 30px;background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;border:none;border-radius:3px;cursor:pointer;transition:transform .2s}
+.btn-join:hover{transform:translateY(-2px)}
+
+.featured-info{display:flex;gap:40px;margin-bottom:24px;flex-wrap:wrap}
+.finfo-item{font-size:.85rem}
+.finfo-label{color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-size:.7rem;margin-bottom:2px}
+.finfo-val{color:var(--white);font-weight:600}
+
+.result-row{display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.result-label{font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.rball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:white;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.rball.red{background:linear-gradient(135deg,#CC0000,#FF3333)}
+.rball.blk{background:linear-gradient(135deg,#222,#444);border:1px solid #555}
+.rball.grn{background:linear-gradient(135deg,#006600,#009900)}
+
+.bet-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.bet-chip{
+  padding:10px 22px;background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);border-radius:3px;
+  font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;
+  color:var(--white);cursor:pointer;transition:all .25s;
+}
+.bet-chip:hover{background:rgba(245,197,24,.15);border-color:var(--gold);color:var(--gold)}
+.bet-custom{padding:10px 22px;background:transparent;border:1px solid rgba(245,197,24,.3);color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;border-radius:3px;cursor:pointer;transition:all .25s}
+.bet-custom:hover{background:rgba(245,197,24,.1)}
+
+/* ── TABLES GRID ── */
+.tables-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.table-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:8px;overflow:hidden;cursor:pointer;
+  transition:all .3s;position:relative;
+}
+.table-card:hover{transform:translateY(-6px);border-color:rgba(245,197,24,.3);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.table-thumb{
+  width:100%;height:140px;
+  background:linear-gradient(135deg,var(--green),var(--felt),#062B18);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.table-thumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.012) 0px,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 10px)}
+.table-thumb-icon{font-size:2.5rem;position:relative;z-index:1;filter:drop-shadow(0 0 10px rgba(245,197,24,0.3))}
+.table-thumb-mini-results{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
+.mini-rdot{width:14px;height:14px;border-radius:50%;font-size:.45rem;display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+.mini-rdot.r{background:#CC2222}
+.mini-rdot.b{background:#222;border:1px solid #444}
+.mini-rdot.g{background:#006600}
+
+.table-live-badge{position:absolute;top:8px;left:8px;z-index:2;display:flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(255,45,85,.2);border:1px solid rgba(255,45,85,.4);border-radius:100px;font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink)}
+.table-live-badge::before{content:'';width:5px;height:5px;background:var(--pink);border-radius:50%;animation:blink 1.5s infinite}
+
+.tbadge{position:absolute;top:8px;right:8px;z-index:2;padding:3px 9px;border-radius:2px;font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.tbadge-hot{background:var(--pink);color:white}
+.tbadge-new{background:var(--teal);color:#000}
+.tbadge-vip{background:linear-gradient(90deg,var(--gold),var(--amber));color:#000}
+
+.table-players{position:absolute;bottom:8px;right:8px;z-index:2;font-size:.65rem;color:rgba(255,255,255,.6);font-weight:600;display:flex;align-items:center;gap:4px}
+
+.table-hover{position:absolute;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:3}
+.table-card:hover .table-hover{opacity:1}
+.g-play-btn{padding:10px 26px;background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;border:none;border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:2px;cursor:pointer;transform:translateY(8px);transition:transform .3s}
+.table-card:hover .g-play-btn{transform:translateY(0)}
+
+.table-info{padding:12px 14px}
+.table-name{font-size:.92rem;font-weight:700;letter-spacing:.3px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.table-provider{font-size:.65rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.table-limits{font-size:.72rem;color:var(--teal);font-weight:600}
+.table-join-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.player-count{font-size:.65rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.player-dot{width:5px;height:5px;background:var(--teal);border-radius:50%;animation:blink 2s infinite}
+.join-mini{padding:6px 16px;background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.3);color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;border-radius:2px;cursor:pointer;transition:all .25s}
+.join-mini:hover{background:rgba(245,197,24,.2)}
+
+/* ── CATEGORY ROW ── */
+.cat-section{padding:50px 60px;max-width:1400px;margin:0 auto}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cat-title{display:flex;align-items:center;gap:12px;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px}
+.cat-icon{font-size:1.4rem}
+
+.scroll-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:rgba(245,197,24,.3) transparent}
+.scroll-row::-webkit-scrollbar{height:3px}
+.scroll-row::-webkit-scrollbar-thumb{background:rgba(245,197,24,.3);border-radius:2px}
+.scroll-card{min-width:180px;background:var(--card);border:1px solid var(--border2);border-radius:8px;overflow:hidden;cursor:pointer;transition:all .3s;flex-shrink:0}
+.scroll-card:hover{transform:translateY(-5px);border-color:rgba(245,197,24,.3)}
+.scroll-thumb{height:110px;background:linear-gradient(135deg,var(--green),var(--felt));display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;overflow:hidden}
+.scroll-thumb::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,0.01) 0px,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 10px)}
+.scroll-info{padding:10px 12px}
+.scroll-name{font-size:.85rem;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scroll-limits{font-size:.65rem;color:var(--teal)}
+.scroll-players{font-size:.62rem;color:var(--muted);margin-top:3px}
+
+/* ── VIP TABLE ── */
+.vip-section-wrap{background:linear-gradient(135deg,rgba(20,15,5,0.95),rgba(30,20,5,0.95));border-top:1px solid rgba(245,197,24,.15);border-bottom:1px solid rgba(245,197,24,.15)}
+.vip-section{padding:60px;max-width:1400px;margin:0 auto}
+.vip-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:16px}
+.vip-badge-big{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;background:linear-gradient(135deg,rgba(245,197,24,.15),rgba(255,140,0,.1));border:1px solid rgba(245,197,24,.3);border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+
+.vip-table-wrap{border:1px solid rgba(245,197,24,.2);border-radius:8px;overflow:hidden}
+.vip-table-head{display:grid;grid-template-columns:1.5fr 1fr 1.5fr 2fr;background:rgba(245,197,24,.08);padding:12px 20px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.vip-table-row{display:grid;grid-template-columns:1.5fr 1fr 1.5fr 2fr;padding:14px 20px;border-top:1px solid rgba(255,255,255,.05);align-items:center;transition:background .25s;cursor:pointer}
+.vip-table-row:hover{background:rgba(245,197,24,.04)}
+.vtr-name{font-weight:600;font-size:.9rem}
+.vtr-game{color:var(--muted);font-size:.85rem}
+.vtr-limits{color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px}
+.vtr-status{display:flex;align-items:center;gap:8px;font-size:.8rem}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.status-dot.open{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.status-dot.full{background:var(--pink);box-shadow:0 0 8px var(--pink)}
+.status-text-open{color:var(--teal)}
+.status-text-full{color:var(--pink)}
+
+/* ── HOW IT WORKS ── */
+.how-wrap{background:var(--bg2)}
+.how-section{padding:70px 60px;max-width:1400px;margin:0 auto;text-align:center}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative}
+.how-grid::before{content:'';position:absolute;top:40px;left:12.5%;right:12.5%;height:1px;background:linear-gradient(90deg,transparent,rgba(245,197,24,.2),rgba(245,197,24,.4),rgba(245,197,24,.2),transparent);pointer-events:none}
+.how-step{padding:0 20px;text-align:center}
+.how-num{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--amber));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#000;margin:0 auto 20px;position:relative;z-index:1}
+.how-icon{font-size:1.8rem;margin-bottom:12px}
+.how-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.how-desc{font-size:.85rem;color:var(--muted);line-height:1.5}
+
+/* ── PROVIDERS ── */
+.providers-wrap{padding:50px 60px;max-width:1400px;margin:0 auto;text-align:center}
+.providers-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.prov-logo{padding:12px 24px;background:var(--card);border:1px solid var(--border2);border-radius:4px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--muted);cursor:pointer;transition:all .25s;min-width:130px;text-align:center}
+.prov-logo:hover{border-color:rgba(245,197,24,.3);color:var(--white)}
+
+/* ── RESP GAMBLING ── */
+.resp-wrap{padding:0 60px 60px;max-width:1400px;margin:0 auto}
+.resp-card{background:linear-gradient(135deg,rgba(255,45,85,.06),rgba(255,45,85,.02));border:1px solid rgba(255,45,85,.2);border-radius:8px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.resp-left{display:flex;align-items:center;gap:18px}
+.age18{width:48px;height:48px;border-radius:50%;border:2px solid var(--pink);color:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+.resp-text strong{display:block;font-size:1rem;font-weight:700;margin-bottom:4px}
+.resp-text p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.resp-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-resp{padding:10px 22px;background:transparent;border:1px solid rgba(255,45,85,.4);color:var(--pink);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:all .25s}
+.btn-resp:hover{background:rgba(255,45,85,.1)}
+.btn-resp2{padding:10px 22px;background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:all .25s}
+.btn-resp2:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
+
+/* ── FOOTER ── */
+footer{background:#030508;border-top:1px solid rgba(245,197,24,.1);padding:60px 60px 28px}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:60px;margin-bottom:50px}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;background:linear-gradient(120deg,var(--gold),var(--amber),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:14px}
+.f-desc{font-size:.82rem;color:var(--muted);line-height:1.75;margin-bottom:20px}
+.f-resp-row{display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--muted)}
+.f-age18{width:34px;height:34px;border-radius:50%;border:2px solid var(--pink);color:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0}
+.f-col h4{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:2px;color:var(--gold);margin-bottom:18px}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.f-links a{color:var(--muted);text-decoration:none;font-size:.83rem;transition:color .25s}
+.f-links a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:24px;display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:var(--muted);flex-wrap:wrap;gap:12px}
+.f-badges{display:flex;gap:8px;flex-wrap:wrap}
+.f-badge{padding:4px 11px;border:1px solid rgba(255,255,255,.08);border-radius:2px;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
+.rv.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .tables-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .how-grid{grid-template-columns:repeat(2,1fr);gap:30px}
+  .how-grid::before{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .vip-table-head,.vip-table-row{grid-template-columns:1.5fr 1fr 1.5fr}
+  .vtr-status{display:none}
+}
+@media(max-width:768px){
+  .navbar{padding:0 20px}
+  .nav-menu{display:none}
+  .hero-inner,.section,.cat-section,.vip-section,.providers-wrap,.resp-wrap,footer{padding-left:20px;padding-right:20px}
+  .featured-wrap{padding-left:20px;padding-right:20px}
+  .filter-inner{padding:0 20px}
+  .tables-grid{grid-template-columns:1fr 1fr}
+  .how-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .featured-info{gap:20px}
+  .vip-table-head,.vip-table-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a class="nav-logo" href="#">VeluxPlay</a>
+  <ul class="nav-menu">
+    <li><a href="#">Casino</a></li>
+    <li><a href="#" class="active">Live Casino</a></li>
+    <li><a href="#">Sports</a></li>
+    <li><a href="#">Poker</a></li>
+    <li><a href="#">Promotions</a></li>
+    <li><a href="#">VIP</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-ghost">Log In</button>
+    <button class="btn-primary">Join Now</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-suits" id="suits-bg"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-pill"><span class="dot"></span> Live Now — 320+ Tables Open</div>
+      <h1 class="hero-h1">
+        <span class="line-gold">Real Dealers.</span><br>
+        <span class="line-outline">Real Thrills.</span><br>
+        <span class="line-white">Real Money.</span>
+      </h1>
+      <p class="hero-desc">Play with professional live dealers 24/7, streamed in crystal-clear HD from our world-class studios. The most immersive casino experience online.</p>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-num">320+</span><span class="hstat-label">Live Tables</span></div>
+        <div class="hstat"><span class="hstat-num">24/7</span><span class="hstat-label">Always Live</span></div>
+        <div class="hstat"><span class="hstat-num">HD</span><span class="hstat-label">Stream Quality</span></div>
+        <div class="hstat"><span class="hstat-num">8+</span><span class="hstat-label">Providers</span></div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-hero-main">Play Live Now</button>
+        <button class="btn-hero-ghost"><span class="play-circle">▶</span>Watch Demo</button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="dealer-visual">
+        <div class="felt-table">
+          <div class="result-dots">
+            <div class="rdot red">32</div>
+            <div class="rdot blk">15</div>
+            <div class="rdot red">7</div>
+            <div class="rdot blk">2</div>
+            <div class="rdot red">19</div>
+          </div>
+          <div class="felt-center">
+            <div class="felt-logo">VeluxPlay</div>
+            <div class="felt-cards">🂱 🂾</div>
+            <div class="felt-line"></div>
+            <div style="font-size:.7rem;color:rgba(245,197,24,0.4);letter-spacing:2px">LIVE ROULETTE</div>
+          </div>
+        </div>
+
+        <div class="dealer-card dc1">
+          <div class="dc-badge live">● LIVE</div>
+          <div class="dc-label">Players at Table</div>
+          <div class="dc-val teal">847</div>
+        </div>
+        <div class="dealer-card dc2">
+          <div class="dc-badge vip">VIP TABLE</div>
+          <div class="dc-label">Max Bet</div>
+          <div class="dc-val gold">$50,000</div>
+        </div>
+        <div class="dealer-card dc3">
+          <div class="dc-label">Last Winner</div>
+          <div class="dc-val" style="font-size:1rem">VIP_Player99</div>
+          <div class="dc-val pink">+$22,100</div>
+        </div>
+        <div class="dealer-card dc4">
+          <div class="dc-label">Hot Number</div>
+          <div class="dc-val gold" style="font-size:2rem">32 🔴</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="filter-tabs">
+      <button class="ftab active">🃏 All Tables</button>
+      <button class="ftab">♠ Blackjack</button>
+      <button class="ftab">🎡 Roulette</button>
+      <button class="ftab">🎴 Baccarat</button>
+      <button class="ftab">🎲 Poker</button>
+      <button class="ftab">🎰 Game Shows</button>
+      <button class="ftab">🎯 Craps</button>
+    </div>
+    <select class="sort-select">
+      <option>Sort: Popular</option>
+      <option>Sort: Lowest Limit</option>
+      <option>Sort: Highest Limit</option>
+      <option>Sort: Most Players</option>
+    </select>
+  </div>
+</div>
+
+<!-- ── FEATURED TABLE ── -->
+<div style="background:var(--bg2);padding-top:40px">
+  <div class="featured-wrap">
+    <div class="featured-card">
+      <div class="featured-top">
+        <div class="featured-left">
+          <div class="live-pill">Live</div>
+          <div>
+            <div class="featured-name">VIP Lightning Roulette — Platinum</div>
+            <div class="featured-sub">Evolution Gaming · English · Studio B</div>
+          </div>
+        </div>
+        <button class="btn-join">Join Table →</button>
+      </div>
+      <div class="featured-info">
+        <div class="finfo-item"><div class="finfo-label">Bet Limits</div><div class="finfo-val">$1 – $50,000</div></div>
+        <div class="finfo-item"><div class="finfo-label">Players Now</div><div class="finfo-val" style="color:var(--teal)">847 online</div></div>
+        <div class="finfo-item"><div class="finfo-label">Language</div><div class="finfo-val">English</div></div>
+        <div class="finfo-item"><div class="finfo-label">Provider</div><div class="finfo-val">Evolution Gaming</div></div>
+        <div class="finfo-item"><div class="finfo-label">RTP</div><div class="finfo-val" style="color:var(--teal)">97.3%</div></div>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Last Results →</span>
+        <div class="rball red">32</div><div class="rball blk">15</div>
+        <div class="rball red">7</div><div class="rball blk">2</div>
+        <div class="rball red">19</div><div class="rball blk">4</div>
+        <div class="rball red">21</div><div class="rball grn">0</div>
+      </div>
+      <div class="bet-row">
+        <span style="font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">Quick Bet →</span>
+        <button class="bet-chip">$10</button>
+        <button class="bet-chip">$25</button>
+        <button class="bet-chip">$50</button>
+        <button class="bet-chip">$100</button>
+        <button class="bet-chip">$500</button>
+        <button class="bet-custom">Custom Amount</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN TABLES GRID ── -->
+<div class="section-bg2">
+  <div class="section">
+    <div class="section-header rv">
+      <div>
+        <div class="eyebrow">Live Casino Tables</div>
+        <div class="s-title">Top <span class="g">Live Tables</span></div>
+        <div class="s-desc">320+ tables running right now across all your favourite games</div>
+      </div>
+      <a href="#" class="see-all">View All Tables →</a>
+    </div>
+
+    <div class="tables-grid">
+      <!-- Card 1 -->
+      <div class="table-card rv d1">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#0D4A2A,#062B18)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-hot">HOT</span>
+          <div class="table-thumb-icon">🎡</div>
+          <div class="table-thumb-mini-results">
+            <div class="mini-rdot r">32</div><div class="mini-rdot b">15</div>
+            <div class="mini-rdot r">7</div><div class="mini-rdot g">0</div><div class="mini-rdot r">19</div>
+          </div>
+          <div class="table-players">👥 847</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Lightning Roulette</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$1 – $10,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>847 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="table-card rv d2">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#1A0A2E,#3D1A6E)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-vip">VIP</span>
+          <div class="table-thumb-icon">🃏</div>
+          <div class="table-players">👥 18</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Baccarat Squeeze VIP</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$20 – $50,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>18 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="table-card rv d3">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#0A2A14,#0D4A22)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-new">NEW</span>
+          <div class="table-thumb-icon">🂡</div>
+          <div class="table-players">👥 412</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Infinite Blackjack</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$1 – $5,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>412 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="table-card rv d4">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#2A1A00,#6B4500)">
+          <div class="table-live-badge">Live</div>
+          <div class="table-thumb-icon">🎰</div>
+          <div class="table-players">👥 3241</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Crazy Time</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$0.10 – $2,500</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>3,241 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="table-card rv d1">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#001A15,#003D2E)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-hot">HOT</span>
+          <div class="table-thumb-icon">🎲</div>
+          <div class="table-players">👥 1840</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Dream Catcher</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$0.10 – $1,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>1,840 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="table-card rv d2">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#0A1A2E,#1B3A5A)">
+          <div class="table-live-badge">Live</div>
+          <div class="table-thumb-icon">♠</div>
+          <div class="table-thumb-mini-results">
+            <div class="mini-rdot b" style="background:#555">P</div>
+            <div class="mini-rdot r">B</div>
+            <div class="mini-rdot b" style="background:#555">P</div>
+            <div class="mini-rdot r">B</div>
+            <div class="mini-rdot r">B</div>
+          </div>
+          <div class="table-players">👥 189</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Speed Baccarat A</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$5 – $10,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>189 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="table-card rv d3">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#200A00,#6B2200)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-new">NEW</span>
+          <div class="table-thumb-icon">🎯</div>
+          <div class="table-players">👥 980</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Monopoly Live</div>
+          <div class="table-provider">Evolution Gaming</div>
+          <div class="table-limits">$0.10 – $2,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>980 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="table-card rv d4">
+        <div class="table-thumb" style="background:linear-gradient(135deg,#0A1A00,#2A5010)">
+          <div class="table-live-badge">Live</div>
+          <span class="tbadge tbadge-vip">VIP</span>
+          <div class="table-thumb-icon">🂱</div>
+          <div class="table-players">👥 76</div>
+          <div class="table-hover"><button class="g-play-btn">JOIN TABLE</button></div>
+        </div>
+        <div class="table-info">
+          <div class="table-name">Casino Hold'em Poker</div>
+          <div class="table-provider">Playtech</div>
+          <div class="table-limits">$1 – $2,000</div>
+          <div class="table-join-row">
+            <div class="player-count"><div class="player-dot"></div>76 playing</div>
+            <button class="join-mini">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ROULETTE CATEGORY ROW ── -->
+<div style="background:var(--bg)">
+  <div class="cat-section rv">
+    <div class="cat-header">
+      <div class="cat-title"><span class="cat-icon">🎡</span> Roulette Tables <span style="font-size:1rem;color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:400;letter-spacing:1px">60 tables live</span></div>
+      <a href="#" class="see-all">See All 60 →</a>
+    </div>
+    <div class="scroll-row">
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">Lightning Roulette</div><div class="scroll-limits">$1 – $10,000</div><div class="scroll-players">👥 847 playing</div></div>
+      </div>
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">Immersive Roulette</div><div class="scroll-limits">$1 – $5,000</div><div class="scroll-players">👥 302 playing</div></div>
+      </div>
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">Speed Roulette</div><div class="scroll-limits">$1 – $3,000</div><div class="scroll-players">👥 541 playing</div></div>
+      </div>
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">Auto Roulette</div><div class="scroll-limits">$0.10 – $1,000</div><div class="scroll-players">👥 128 playing</div></div>
+      </div>
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">VIP Roulette</div><div class="scroll-limits">$50 – $50,000</div><div class="scroll-players">👥 67 playing</div></div>
+      </div>
+      <div class="scroll-card" style="min-width:190px">
+        <div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🎡</span></div>
+        <div class="scroll-info"><div class="scroll-name">Age of Gods Roulette</div><div class="scroll-limits">$1 – $5,000</div><div class="scroll-players">👥 214 playing</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- blackjack row -->
+  <div class="cat-section rv" style="padding-top:0">
+    <div class="cat-header">
+      <div class="cat-title"><span class="cat-icon">♠</span> Blackjack Tables <span style="font-size:1rem;color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:400;letter-spacing:1px">80 tables live</span></div>
+      <a href="#" class="see-all">See All 80 →</a>
+    </div>
+    <div class="scroll-row">
+      <div class="scroll-card" style="min-width:190px"><div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🂡</span></div><div class="scroll-info"><div class="scroll-name">Infinite Blackjack</div><div class="scroll-limits">$1 – $5,000</div><div class="scroll-players">👥 412 playing</div></div></div>
+      <div class="scroll-card" style="min-width:190px"><div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🂡</span></div><div class="scroll-info"><div class="scroll-name">Classic Blackjack</div><div class="scroll-limits">$5 – $10,000</div><div class="scroll-players">👥 89 playing</div></div></div>
+      <div class="scroll-card" style="min-width:190px"><div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🂡</span></div><div class="scroll-info"><div class="scroll-name">Speed Blackjack</div><div class="scroll-limits">$1 – $2,500</div><div class="scroll-players">👥 234 playing</div></div></div>
+      <div class="scroll-card" style="min-width:190px"><div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🂡</span></div><div class="scroll-info"><div class="scroll-name">Free Bet Blackjack</div><div class="scroll-limits">$1 – $2,500</div><div class="scroll-players">👥 154 playing</div></div></div>
+      <div class="scroll-card" style="min-width:190px"><div class="scroll-thumb"><div class="table-live-badge" style="position:relative;top:auto;left:auto;margin-bottom:8px;z-index:1">Live</div><span style="font-size:2rem;position:relative;z-index:1">🂡</span></div><div class="scroll-info"><div class="scroll-name">VIP Blackjack</div><div class="scroll-limits">$100 – $50,000</div><div class="scroll-players">👥 67 playing</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VIP TABLES ── -->
+<div class="vip-section-wrap">
+  <div class="vip-section">
+    <div class="vip-header">
+      <div>
+        <div class="vip-badge-big">👑 High Roller & VIP</div>
+        <div class="s-title">Private <span class="g">VIP Tables</span></div>
+        <div class="s-desc">For serious players only. Dedicated hosts, private rooms, maximum limits.</div>
+      </div>
+      <button class="btn-join">Become VIP →</button>
+    </div>
+    <div class="vip-table-wrap rv">
+      <div class="vip-table-head">
+        <div>Table</div><div>Game</div><div>Limits</div><div>Status</div>
+      </div>
+      <div class="vip-table-row">
+        <div class="vtr-name">Salon Privé 1</div>
+        <div class="vtr-game">Blackjack</div>
+        <div class="vtr-limits">$500 – $50,000</div>
+        <div class="vtr-status"><div class="status-dot open"></div><span class="status-text-open">3 of 7 seats open</span></div>
+      </div>
+      <div class="vip-table-row">
+        <div class="vtr-name">Salon Privé 2</div>
+        <div class="vtr-game">Baccarat</div>
+        <div class="vtr-limits">$500 – $75,000</div>
+        <div class="vtr-status"><div class="status-dot full"></div><span class="status-text-full">Full — Join Waitlist</span></div>
+      </div>
+      <div class="vip-table-row">
+        <div class="vtr-name">VIP Roulette Platinum</div>
+        <div class="vtr-game">Roulette</div>
+        <div class="vtr-limits">$100 – $50,000</div>
+        <div class="vtr-status"><div class="status-dot open"></div><span class="status-text-open">5 of 8 seats open</span></div>
+      </div>
+      <div class="vip-table-row">
+        <div class="vtr-name">Diamond Poker Room</div>
+        <div class="vtr-game">Texas Hold'em</div>
+        <div class="vtr-limits">$1,000 – $100,000</div>
+        <div class="vtr-status"><div class="status-dot open"></div><span class="status-text-open">2 of 6 seats open</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<div class="how-wrap">
+  <div class="how-section">
+    <div class="eyebrow rv">Simple to Start</div>
+    <div class="s-title rv d1">How <span class="g">Live Casino Works</span></div>
+    <div class="how-grid">
+      <div class="how-step rv d1">
+        <div class="how-num">1</div>
+        <div class="how-icon">👤</div>
+        <div class="how-title">Create Account</div>
+        <div class="how-desc">Sign up free in under 60 seconds. No downloads needed.</div>
+      </div>
+      <div class="how-step rv d2">
+        <div class="how-num">2</div>
+        <div class="how-icon">🎡</div>
+        <div class="how-title">Choose Table</div>
+        <div class="how-desc">Browse 320+ live tables by game, limit, or provider.</div>
+      </div>
+      <div class="how-step rv d3">
+        <div class="how-num">3</div>
+        <div class="how-icon">💰</div>
+        <div class="how-title">Place Your Bet</div>
+        <div class="how-desc">Watch the live dealer and place bets in real time.</div>
+      </div>
+      <div class="how-step rv d4">
+        <div class="how-num">4</div>
+        <div class="how-icon">⚡</div>
+        <div class="how-title">Win & Withdraw</div>
+        <div class="how-desc">Winnings paid instantly. Withdraw in minutes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROVIDERS ── -->
+<div style="background:var(--bg2)">
+  <div class="providers-wrap rv">
+    <div class="eyebrow">Powered By</div>
+    <div class="s-title" style="text-align:center">World's <span class="g">Best Providers</span></div>
+    <div class="providers-row">
+      <div class="prov-logo">Evolution</div>
+      <div class="prov-logo">Playtech</div>
+      <div class="prov-logo">Ezugi</div>
+      <div class="prov-logo">Pragmatic Live</div>
+      <div class="prov-logo">NetEnt Live</div>
+      <div class="prov-logo">Authentic</div>
+      <div class="prov-logo">Vivo Gaming</div>
+      <div class="prov-logo">SA Gaming</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESPONSIBLE GAMBLING ── -->
+<div style="background:var(--bg2);padding-bottom:0">
+  <div class="resp-wrap rv">
+    <div class="resp-card">
+      <div class="resp-left">
+        <div class="age18">18+</div>
+        <div class="resp-text">
+          <strong>Play Responsibly</strong>
+          <p>Live casino involves real money. Set your limits before you play.<br>Tools available in your account settings at any time.</p>
+        </div>
+      </div>
+      <div class="resp-btns">
+        <button class="btn-resp">Set Deposit Limit</button>
+        <button class="btn-resp2">Learn More</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <span class="f-logo">VeluxPlay</span>
+        <p class="f-desc">VeluxPlay is a fully licensed and regulated online gaming platform offering live casino and sports betting to players worldwide. Please gamble responsibly.</p>
+        <div class="f-resp-row"><div class="f-age18">18+</div><span>Gambling can be addictive. Please play responsibly.</span></div>
+      </div>
+      <div>
+        <h4>Live Casino</h4>
+        <ul class="f-links">
+          <li><a href="#">All Live Tables</a></li>
+          <li><a href="#">Blackjack</a></li>
+          <li><a href="#">Roulette</a></li>
+          <li><a href="#">Baccarat</a></li>
+          <li><a href="#">Game Shows</a></li>
+          <li><a href="#">VIP Tables</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Casino</h4>
+        <ul class="f-links">
+          <li><a href="#">All Games</a></li>
+          <li><a href="#">Slots</a></li>
+          <li><a href="#">Jackpots</a></li>
+          <li><a href="#">Poker</a></li>
+          <li><a href="#">Sports</a></li>
+          <li><a href="#">Promotions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul class="f-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Live Chat</a></li>
+          <li><a href="#">Responsible Gaming</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Affiliates</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 VeluxPlay. All rights reserved. Licensed & Regulated.</div>
+      <div class="f-badges">
+        <div class="f-badge">MGA Licensed</div>
+        <div class="f-badge">Curacao eGaming</div>
+        <div class="f-badge">SSL Secured</div>
+        <div class="f-badge">RNG Certified</div>
+        <div class="f-badge">GamCare</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// suits background
+(function(){
+  const suits = document.getElementById('suits-bg');
+  const s = ['♠','♥','♦','♣'];
+  let h = '';
+  for(let i=0;i<96;i++) h += `<span>${s[i%4]}</span>`;
+  suits.innerHTML = h;
+})();
+
+// ticker
+(function(){
+  const wins = [
+    {i:'🎡',n:'RouletteAce',g:'Lightning Roulette',a:'$22,100'},
+    {i:'🃏',n:'VIP_Player99',g:'Baccarat Squeeze',a:'$48,200'},
+    {i:'🂡',n:'BJ_Master7',g:'Infinite Blackjack',a:'$12,750'},
+    {i:'🎰',n:'Crazy_Time_Fan',g:'Crazy Time',a:'$8,400'},
+    {i:'🎲',n:'HighRoller_X',g:'Monopoly Live',a:'$31,000'},
+    {i:'♠',n:'PokerKing99',g:"Casino Hold'em",a:'$15,600'},
+    {i:'🎡',n:'SpinQueen',g:'Immersive Roulette',a:'$5,900'},
+    {i:'🃏',n:'Bac_Legend',g:'Speed Baccarat',a:'$9,800'},
+  ];
+  const track = document.getElementById('ticker');
+  let html = '';
+  [wins,wins].forEach(arr => arr.forEach(w => {
+    html += `<div class="ticker-item"><span>${w.i}</span><span class="ti-name">${w.n}</span><span class="ti-won">won</span><span class="ti-amount">${w.a}</span><span class="ti-won">on ${w.g}</span></div>`;
+  }));
+  track.innerHTML = html;
+})();
+
+// filter tabs
+document.querySelectorAll('.ftab').forEach(btn => {
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.08});
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+// navbar scroll
+window.addEventListener('scroll',() => {
+  document.querySelector('.navbar').style.background =
+    window.scrollY > 60 ? 'rgba(6,8,15,0.99)' : 'rgba(6,8,15,0.92)';
+});
+</script>
+</body>
+</html>
