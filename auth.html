@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeluxPlay – Login & Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080F;--bg2:#0E1422;--bg3:#121B30;
+  --card:#111827;--card2:#182035;--card3:#1E2A45;
+  --gold:#F5C518;--amber:#FF8C00;
+  --teal:#00E5CC;--pink:#FF2D55;--green:#00CC66;
+  --white:#F0F2F5;--muted:#6B7A99;
+  --border:rgba(245,197,24,.14);--border2:rgba(255,255,255,.07);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--white);font-family:'Rajdhani',sans-serif}
+
+/* noise */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+/* ── WRAPPER ── */
+.auth-wrapper{display:flex;height:100vh;overflow:hidden}
+
+/* ── LEFT PANEL ── */
+.left-panel{width:45%;min-width:420px;background:var(--bg2);position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 48px;overflow:hidden;flex-shrink:0}
+
+.lp-bg{position:absolute;inset:0;pointer-events:none}
+.lp-beam{position:absolute;top:-10%;right:-10%;width:80%;height:80%;background:linear-gradient(225deg,rgba(245,197,24,.07) 0%,transparent 60%);transform:rotate(-15deg)}
+.lp-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,197,24,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(245,197,24,.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%)}
+
+/* particles */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;border-radius:50%;animation:particleRise linear infinite;opacity:0}
+@keyframes particleRise{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.4}100%{transform:translateY(-20px) scale(1.2);opacity:0}}
+
+.lp-content{position:relative;z-index:2;width:100%;max-width:400px}
+.lp-logo{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:5px;background:linear-gradient(120deg,var(--gold),var(--amber),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:block;margin-bottom:40px}
+
+/* dynamic left content */
+.lp-section{display:none;animation:fadeIn .5s ease}
+.lp-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.lp-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,4vw,4.2rem);line-height:.92;letter-spacing:2px;margin-bottom:20px}
+.lp-h .lw{color:var(--white)}.lp-h .lg{background:linear-gradient(90deg,var(--gold),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.lp-h .lo{-webkit-text-stroke:1.5px rgba(245,197,24,.4);color:transparent}
+.lp-desc{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:28px}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.stat-box{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;transition:border-color .3s}
+.stat-box:hover{border-color:var(--border)}
+.sb-num{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);letter-spacing:1px;display:block}
+.sb-label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+
+.stars{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted);margin-bottom:24px}
+.stars span:first-child{color:var(--gold);letter-spacing:2px;font-size:1rem}
+
+.trust-row{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--border2)}
+.trust-badge{padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:3px;font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);transition:all .25s}
+.trust-badge:hover{border-color:var(--border);color:var(--white)}
+
+/* bonus card */
+.bonus-card{background:linear-gradient(135deg,rgba(245,197,24,.06),rgba(255,140,0,.04));border:1px solid rgba(245,197,24,.25);border-radius:10px;padding:20px 22px;margin-bottom:22px;position:relative;overflow:hidden}
+.bonus-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.005) 0,rgba(255,255,255,.005) 1px,transparent 1px,transparent 12px);pointer-events:none}
+.bc-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bc-icon{font-size:1.4rem}
+.bc-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold)}
+.bc-amount{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--white);letter-spacing:2px;line-height:1;margin-bottom:4px}
+.bc-sub{font-size:.78rem;color:var(--muted)}
+.checklist{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:7px}
+.checklist li{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:8px}
+.checklist li::before{content:'✓';color:var(--green);font-weight:700;font-size:.9rem}
+
+/* ── RIGHT PANEL ── */
+.right-panel{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 48px;overflow-y:auto;position:relative}
+.right-panel::-webkit-scrollbar{width:3px}
+.right-panel::-webkit-scrollbar-thumb{background:rgba(245,197,24,.3)}
+
+/* screens */
+.screen{display:none;width:100%;max-width:440px;animation:screenIn .4s ease}
+.screen.active{display:block}
+@keyframes screenIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:color .25s;margin-bottom:28px}
+.back-link:hover{color:var(--teal)}
+
+.eyebrow{font-size:.65rem;letter-spacing:3.5px;text-transform:uppercase;font-weight:700;color:var(--teal);margin-bottom:8px}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3rem);letter-spacing:2px;line-height:.95;margin-bottom:6px}
+.form-title .g{color:var(--gold)}
+.form-subtitle{font-size:.88rem;color:var(--muted);margin-bottom:32px;line-height:1.6}
+
+/* form elements */
+.form-group{margin-bottom:18px;position:relative}
+.form-group.half{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.f-label{display:block;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:7px}
+.f-input{width:100%;padding:12px 16px;background:var(--card2);border:1px solid var(--border2);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:500;border-radius:5px;outline:none;transition:all .25s;-webkit-appearance:none}
+.f-input:focus{border-color:rgba(245,197,24,.55);background:var(--card3);box-shadow:0 0 0 3px rgba(245,197,24,.08)}
+.f-input.error{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,85,.08)}
+.f-input.success{border-color:rgba(0,204,102,.6);box-shadow:0 0 0 3px rgba(0,204,102,.08)}
+.f-input::placeholder{color:rgba(107,122,153,.7)}
+select.f-input{cursor:pointer}
+select.f-input option{background:var(--card2);color:var(--white)}
+
+.input-wrap{position:relative}
+.input-wrap .f-input{padding-right:44px}
+.input-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--muted);font-size:1rem;transition:color .25s;user-select:none}
+.input-icon:hover{color:var(--white)}
+.input-check{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:.9rem}
+
+.f-error{font-size:.72rem;color:var(--pink);margin-top:5px;display:flex;align-items:center;gap:5px}
+.f-success{font-size:.72rem;color:var(--green);margin-top:5px;display:flex;align-items:center;gap:5px}
+.f-hint{font-size:.7rem;color:var(--muted);margin-top:5px}
+
+/* password strength */
+.pw-strength{margin-top:8px}
+.pw-bars{display:flex;gap:4px;margin-bottom:5px}
+.pw-bar{flex:1;height:3px;border-radius:100px;background:rgba(255,255,255,.08);transition:background .3s}
+.pw-bar.weak{background:var(--pink)}
+.pw-bar.medium{background:var(--gold)}
+.pw-bar.strong{background:var(--teal)}
+.pw-bar.vstrong{background:var(--green)}
+.pw-label{font-size:.68rem;color:var(--muted)}
+
+/* phone row */
+.phone-row{display:grid;grid-template-columns:90px 1fr;gap:10px}
+
+/* checkbox */
+.check-group{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;cursor:pointer}
+.check-group input[type=checkbox]{width:16px;height:16px;margin-top:2px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+.check-label{font-size:.82rem;color:var(--muted);line-height:1.5;cursor:pointer}
+.check-label a{color:var(--teal);text-decoration:none;transition:color .25s}
+.check-label a:hover{color:var(--gold)}
+.check-label.required-check{color:var(--white)}
+
+/* radio */
+.radio-row{display:flex;gap:14px;margin-top:6px}
+.radio-opt{display:flex;align-items:center;gap:7px;cursor:pointer;padding:9px 18px;background:var(--card2);border:1px solid var(--border2);border-radius:4px;transition:all .25s;font-size:.85rem;font-weight:600}
+.radio-opt:hover{border-color:rgba(245,197,24,.3)}
+.radio-opt input{accent-color:var(--gold)}
+.radio-opt.checked{background:rgba(245,197,24,.1);border-color:rgba(245,197,24,.4);color:var(--gold)}
+
+/* divider */
+.or-divider{display:flex;align-items:center;gap:14px;margin:22px 0;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border2)}
+
+/* social buttons */
+.social-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px}
+.social-btn{padding:11px;background:var(--card);border:1px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:.78rem;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .25s;color:var(--white)}
+.social-btn:hover{background:var(--card2);border-color:rgba(245,197,24,.2)}
+.social-icon{font-size:1rem}
+
+/* main button */
+.btn-main{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--amber));color:#000;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2.5px;border:none;border-radius:5px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,opacity .2s;margin-bottom:18px}
+.btn-main:hover{transform:translateY(-2px);opacity:.92}
+.btn-main::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-100%);transition:transform .55s}
+.btn-main:hover::after{transform:translateX(100%)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+.btn-ghost{width:100%;padding:13px;background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;border-radius:5px;cursor:pointer;transition:all .25s;margin-bottom:18px}
+.btn-ghost:hover{border-color:rgba(245,197,24,.3);color:var(--white)}
+
+.btn-teal{width:100%;padding:13px;background:rgba(0,229,204,.1);border:1px solid rgba(0,229,204,.3);color:var(--teal);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;border-radius:5px;cursor:pointer;transition:all .25s;margin-bottom:16px}
+.btn-teal:hover{background:rgba(0,229,204,.2)}
+
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+.btn-row .btn-ghost{margin-bottom:0}
+.btn-row .btn-main{margin-bottom:0}
+
+/* switch link */
+.switch-link{text-align:center;font-size:.82rem;color:var(--muted);margin-top:4px}
+.switch-link a{color:var(--teal);text-decoration:none;font-weight:600;transition:color .25s;cursor:pointer}
+.switch-link a:hover{color:var(--gold)}
+
+.resp-note{font-size:.68rem;color:rgba(107,122,153,.6);text-align:center;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.pink-dot{color:var(--pink)}
+
+/* ── STEP INDICATOR ── */
+.step-indicator{display:flex;align-items:center;margin-bottom:32px}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:1px;transition:all .4s;flex-shrink:0}
+.step-dot.done{background:linear-gradient(135deg,var(--gold),var(--amber));color:#000}
+.step-dot.active{background:rgba(245,197,24,.15);border:2px solid var(--gold);color:var(--gold)}
+.step-dot.upcoming{background:var(--card2);border:1px solid var(--border2);color:var(--muted)}
+.step-line{flex:1;height:2px;background:var(--border2);margin:0 8px;transition:background .4s}
+.step-line.done{background:linear-gradient(90deg,var(--gold),var(--amber))}
+.step-label-row{display:flex;justify-content:space-between;margin-top:6px;margin-bottom:24px}
+.step-label{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:center;flex:1}
+.step-label.active{color:var(--gold)}
+
+/* ── SUMMARY CARD ── */
+.summary-card{background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:16px 18px;margin-bottom:20px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border2);font-size:.82rem}
+.summary-row:last-child{border-bottom:none}
+.sr-key{color:var(--muted);font-weight:600}
+.sr-val{color:var(--white);font-weight:700}
+
+/* responsible gambling quick limits */
+.rg-banner{background:rgba(255,45,85,.06);border:1px solid rgba(255,45,85,.2);border-radius:8px;padding:16px 18px;margin-bottom:20px}
+.rg-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rg18{width:32px;height:32px;border-radius:50%;border:2px solid var(--pink);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+.rg-title{font-size:.85rem;font-weight:700}
+.rg-desc{font-size:.75rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.limit-chips{display:flex;gap:8px;flex-wrap:wrap}
+.lchip{padding:7px 16px;background:var(--card2);border:1px solid var(--border2);border-radius:3px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .25s}
+.lchip:hover,.lchip.active{background:rgba(245,197,24,.1);border-color:rgba(245,197,24,.4);color:var(--gold)}
+
+/* ── SUCCESS SCREEN ── */
+.success-screen{text-align:center;padding:20px 0}
+.success-icon-wrap{width:80px;height:80px;margin:0 auto 24px;position:relative}
+.success-circle{width:80px;height:80px;border-radius:50%;background:rgba(0,204,102,.1);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;animation:successPop .5s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes successPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success-check{font-size:2.2rem;animation:checkIn .4s .3s ease both}
+@keyframes checkIn{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;overflow:hidden}
+.confetti-piece{position:absolute;width:8px;height:12px;border-radius:2px;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0) translateX(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg) translateX(var(--drift));opacity:0}}
+
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:2px;margin-bottom:8px}
+.success-title .g{color:var(--gold)}
+.success-sub{font-size:.9rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.bonus-claim-card{background:linear-gradient(135deg,rgba(245,197,24,.08),rgba(255,140,0,.04));border:1px solid rgba(245,197,24,.25);border-radius:10px;padding:18px 20px;margin-bottom:22px;animation:bonusPulse 3s ease-in-out infinite}
+@keyframes bonusPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,197,24,.15)}50%{box-shadow:0 0 20px 4px rgba(245,197,24,.1)}}
+.bc-claim-amount{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:2px}
+.bc-claim-label{font-size:.75rem;color:var(--muted);margin-top:3px}
+.email-note{font-size:.78rem;color:var(--muted);display:flex;align-items:center;gap:6px;justify-content:center}
+
+/* ── EMAIL CHECK SCREEN ── */
+.email-icon-wrap{width:70px;height:70px;margin:0 auto 20px;background:rgba(0,229,204,.08);border:2px solid rgba(0,229,204,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;animation:floatIcon 3s ease-in-out infinite}
+@keyframes floatIcon{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.countdown{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--teal);letter-spacing:2px}
+
+/* ── FORGOT PASSWORD SCREENS ── */
+.fp-icon{font-size:2.5rem;margin-bottom:16px;display:block;text-align:center}
+
+/* ── PROMO CODE STATUS ── */
+.promo-status{font-size:.72rem;margin-top:5px;display:flex;align-items:center;gap:5px}
+.promo-status.valid{color:var(--green)}
+.promo-status.invalid{color:var(--pink)}
+
+/* ── USERNAME AVAILABILITY ── */
+.avail-status{font-size:.72rem;margin-top:5px;display:flex;align-items:center;gap:5px}
+.avail-status.available{color:var(--green)}
+.avail-status.taken{color:var(--pink)}
+.avail-status.checking{color:var(--teal)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(245,197,24,.3)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .left-panel{display:none}
+  .right-panel{padding:32px 24px}
+}
+@media(max-width:480px){
+  .right-panel{padding:24px 20px}
+  .screen{max-width:100%}
+  .form-group.half{grid-template-columns:1fr}
+  .radio-row{flex-direction:column}
+  .phone-row{grid-template-columns:80px 1fr}
+  .social-row{grid-template-columns:1fr}
+  .btn-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- CONFETTI CONTAINER -->
+<div class="confetti" id="confetti"></div>
+
+<div class="auth-wrapper">
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <div class="left-panel">
+    <div class="lp-bg"><div class="lp-beam"></div><div class="lp-grid"></div></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="lp-content">
+      <a class="lp-logo" href="#">VeluxPlay</a>
+
+      <!-- Login Left -->
+      <div class="lp-section active" id="lp-login">
+        <div class="lp-h">
+          <span class="lw">The Ultimate</span><br>
+          <span class="lg">Gaming</span><br>
+          <span class="lo">Experience.</span>
+        </div>
+        <p class="lp-desc">Join 50,000+ players already winning big. Live casino, sports betting, and exclusive VIP rewards — all in one place.</p>
+        <div class="stats-grid">
+          <div class="stat-box"><span class="sb-num">50K+</span><span class="sb-label">Players Online</span></div>
+          <div class="stat-box"><span class="sb-num">320+</span><span class="sb-label">Live Tables</span></div>
+          <div class="stat-box"><span class="sb-num">10K+</span><span class="sb-label">Daily Events</span></div>
+          <div class="stat-box"><span class="sb-num">24/7</span><span class="sb-label">Live Support</span></div>
+        </div>
+        <div class="stars"><span>★★★★★</span><span>Rated 4.9/5 by 48,000+ verified players</span></div>
+        <div class="trust-row">
+          <div class="trust-badge">🔒 SSL</div>
+          <div class="trust-badge">MGA Licensed</div>
+          <div class="trust-badge">⊛ 18+</div>
+          <div class="trust-badge">RNG Certified</div>
+        </div>
+      </div>
+
+      <!-- Register Left -->
+      <div class="lp-section" id="lp-register">
+        <div class="lp-h">
+          <span class="lw">Join Today &</span><br>
+          <span class="lg">Claim Your</span><br>
+          <span class="lo">Welcome Bonus</span>
+        </div>
+        <div class="bonus-card">
+          <div class="bc-top"><span class="bc-icon">🎁</span><span class="bc-title">Welcome Package</span></div>
+          <div class="bc-amount">$1,000</div>
+          <div class="bc-sub">Bonus + 200 Free Spins on first deposit</div>
+          <ul class="checklist">
+            <li>No wagering on first bet</li>
+            <li>Instant account setup</li>
+            <li>Withdraw winnings anytime</li>
+            <li>Dedicated 24/7 VIP support</li>
+          </ul>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge">🔒 SSL</div>
+          <div class="trust-badge">MGA Licensed</div>
+          <div class="trust-badge">⊛ 18+</div>
+        </div>
+      </div>
+
+      <!-- Forgot Password Left -->
+      <div class="lp-section" id="lp-forgot">
+        <div class="lp-h">
+          <span class="lw">Reset Your</span><br>
+          <span class="lg">Password</span><br>
+          <span class="lo">Quickly.</span>
+        </div>
+        <p class="lp-desc">Enter the email address linked to your account. We'll send a secure reset link within seconds.</p>
+        <div class="stats-grid">
+          <div class="stat-box"><span class="sb-num">30s</span><span class="sb-label">Average Reset</span></div>
+          <div class="stat-box"><span class="sb-num">256bit</span><span class="sb-label">SSL Secure</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge">🔒 SSL</div>
+          <div class="trust-badge">MGA Licensed</div>
+          <div class="trust-badge">⊛ 18+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <div class="right-panel">
+
+    <!-- ─── LOGIN SCREEN ─── -->
+    <div class="screen active" id="screen-login">
+      <div class="eyebrow">Welcome Back</div>
+      <div class="form-title">Log <span class="g">In</span></div>
+      <div class="form-subtitle">Access your account to start playing</div>
+
+      <div class="form-group">
+        <label class="f-label">Email or Username</label>
+        <div class="input-wrap">
+          <input class="f-input" id="login-email" type="text" placeholder="john@email.com" oninput="validateLoginEmail(this)">
+          <span class="input-check" id="login-email-check"></span>
+        </div>
+        <div class="f-error" id="login-email-err" style="display:none">⚠ Please enter a valid email or username</div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Password</label>
+        <div class="input-wrap">
+          <input class="f-input" id="login-pw" type="password" placeholder="••••••••" oninput="validateLoginPw(this)">
+          <span class="input-icon" onclick="togglePw('login-pw',this)">👁</span>
+        </div>
+        <div class="f-error" id="login-pw-err" style="display:none">⚠ Password must be at least 6 characters</div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+        <label class="check-group" style="margin-bottom:0">
+          <input type="checkbox" id="remember-me">
+          <span class="check-label">Remember me</span>
+        </label>
+        <span style="font-size:.8rem;color:var(--teal);cursor:pointer;font-weight:600;letter-spacing:.5px;transition:color .25s" onclick="showScreen('forgot')" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--teal)'">Forgot Password?</span>
+      </div>
+
+      <button class="btn-main" onclick="handleLogin()">Log In →</button>
+
+      <div class="or-divider">or continue with</div>
+
+      <div class="social-row">
+        <button class="social-btn"><span class="social-icon">🇬</span>Google</button>
+        <button class="social-btn"><span class="social-icon">f</span>Facebook</button>
+        <button class="social-btn"><span class="social-icon">🍎</span>Apple</button>
+      </div>
+
+      <div class="switch-link">Don't have an account? <a onclick="showScreen('register-1')">Join Free →</a></div>
+      <div class="resp-note"><span class="pink-dot">⊛ 18+</span> Gambling involves risk. Please play responsibly.</div>
+    </div>
+
+    <!-- ─── REGISTER STEP 1 ─── -->
+    <div class="screen" id="screen-register-1">
+      <span class="back-link" onclick="showScreen('login')">← Back to Login</span>
+
+      <div class="step-indicator">
+        <div class="step-dot active">1</div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-dot upcoming" id="dot-2">2</div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-dot upcoming" id="dot-3">3</div>
+      </div>
+      <div class="step-label-row">
+        <span class="step-label active">Account</span>
+        <span class="step-label" id="sl-2">Personal</span>
+        <span class="step-label" id="sl-3">Verify</span>
+      </div>
+
+      <div class="eyebrow">Step 1 of 3</div>
+      <div class="form-title">Create <span class="g">Account</span></div>
+      <div class="form-subtitle">Choose your username and set a secure password</div>
+
+      <div class="form-group">
+        <label class="f-label">Username</label>
+        <div class="input-wrap">
+          <input class="f-input" id="reg-username" type="text" placeholder="veluxking99" oninput="checkUsername(this)">
+          <span class="input-check" id="username-check"></span>
+        </div>
+        <div class="avail-status" id="username-status" style="display:none"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Email Address</label>
+        <div class="input-wrap">
+          <input class="f-input" id="reg-email" type="email" placeholder="john@email.com" oninput="validateRegEmail(this)">
+          <span class="input-check" id="reg-email-check"></span>
+        </div>
+        <div class="f-error" id="reg-email-err" style="display:none">⚠ Please enter a valid email address</div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Password</label>
+        <div class="input-wrap">
+          <input class="f-input" id="reg-pw" type="password" placeholder="Min 8 characters" oninput="checkPwStrength(this)">
+          <span class="input-icon" onclick="togglePw('reg-pw',this)">👁</span>
+        </div>
+        <div class="pw-strength">
+          <div class="pw-bars" id="pw-bars">
+            <div class="pw-bar" id="bar1"></div>
+            <div class="pw-bar" id="bar2"></div>
+            <div class="pw-bar" id="bar3"></div>
+            <div class="pw-bar" id="bar4"></div>
+          </div>
+          <span class="pw-label" id="pw-label">Enter a password</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Confirm Password</label>
+        <div class="input-wrap">
+          <input class="f-input" id="reg-pw2" type="password" placeholder="Repeat password" oninput="checkPwMatch(this)">
+          <span class="input-icon" onclick="togglePw('reg-pw2',this)">👁</span>
+        </div>
+        <div class="f-error" id="pw-match-err" style="display:none">⚠ Passwords do not match</div>
+        <div class="f-success" id="pw-match-ok" style="display:none">✓ Passwords match</div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Promo Code <span style="color:var(--muted);font-size:.6rem;letter-spacing:1px">(OPTIONAL)</span></label>
+        <div class="input-wrap">
+          <input class="f-input" id="promo-code" type="text" placeholder="Enter promo code" oninput="checkPromo(this)" style="text-transform:uppercase">
+        </div>
+        <div class="promo-status" id="promo-status" style="display:none"></div>
+      </div>
+
+      <button class="btn-main" onclick="goStep2()">Continue →</button>
+      <div class="switch-link">Already have an account? <a onclick="showScreen('login')">Log In</a></div>
+      <div class="resp-note"><span class="pink-dot">⊛ 18+</span> Gambling involves risk. Please play responsibly.</div>
+    </div>
+
+    <!-- ─── REGISTER STEP 2 ─── -->
+    <div class="screen" id="screen-register-2">
+      <span class="back-link" onclick="showScreen('register-1')">← Back</span>
+
+      <div class="step-indicator">
+        <div class="step-dot done">✓</div>
+        <div class="step-line done" id="line-1b"></div>
+        <div class="step-dot active">2</div>
+        <div class="step-line" id="line-2b"></div>
+        <div class="step-dot upcoming">3</div>
+      </div>
+      <div class="step-label-row">
+        <span class="step-label">Account</span>
+        <span class="step-label active">Personal</span>
+        <span class="step-label">Verify</span>
+      </div>
+
+      <div class="eyebrow">Step 2 of 3</div>
+      <div class="form-title">Personal <span class="g">Info</span></div>
+      <div class="form-subtitle">We need your details to keep your account secure</div>
+
+      <div class="form-group half">
+        <div>
+          <label class="f-label">First Name</label>
+          <input class="f-input" id="reg-fname" type="text" placeholder="John">
+        </div>
+        <div>
+          <label class="f-label">Last Name</label>
+          <input class="f-input" id="reg-lname" type="text" placeholder="Doe">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Date of Birth <span style="color:var(--pink);font-size:.58rem">Must be 18+</span></label>
+        <div class="form-group triple" style="margin-bottom:0">
+          <select class="f-input" id="dob-day"><option value="">Day</option></select>
+          <select class="f-input" id="dob-month"><option value="">Month</option><option>January</option><option>February</option><option>March</option><option>April</option><option>May</option><option>June</option><option>July</option><option>August</option><option>September</option><option>October</option><option>November</option><option>December</option></select>
+          <select class="f-input" id="dob-year"><option value="">Year</option></select>
+        </div>
+        <div class="f-error" id="dob-err" style="display:none">⚠ You must be 18 or older to register</div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Country of Residence</label>
+        <select class="f-input" id="reg-country">
+          <option value="">Select country...</option>
+          <option>🇬🇧 United Kingdom</option>
+          <option>🇩🇪 Germany</option>
+          <option>🇫🇷 France</option>
+          <option>🇳🇱 Netherlands</option>
+          <option>🇳🇴 Norway</option>
+          <option>🇸🇪 Sweden</option>
+          <option>🇨🇦 Canada</option>
+          <option>🇦🇺 Australia</option>
+          <option>🇳🇿 New Zealand</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Mobile Number</label>
+        <div class="phone-row">
+          <select class="f-input">
+            <option>+44</option><option>+49</option><option>+33</option><option>+31</option><option>+1</option><option>+61</option>
+          </select>
+          <input class="f-input" type="tel" placeholder="7700 000000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Currency</label>
+        <select class="f-input" id="reg-currency">
+          <option>$ USD — US Dollar</option>
+          <option>€ EUR — Euro</option>
+          <option>£ GBP — British Pound</option>
+          <option>₿ BTC — Bitcoin</option>
+          <option>Ξ ETH — Ethereum</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Gender <span style="color:var(--muted);font-size:.6rem;letter-spacing:1px">(OPTIONAL)</span></label>
+        <div class="radio-row">
+          <label class="radio-opt" onclick="selectRadio(this,'gender')"><input type="radio" name="gender" value="male"> Male</label>
+          <label class="radio-opt" onclick="selectRadio(this,'gender')"><input type="radio" name="gender" value="female"> Female</label>
+          <label class="radio-opt" onclick="selectRadio(this,'gender')"><input type="radio" name="gender" value="other"> Other</label>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-ghost" onclick="showScreen('register-1')">← Back</button>
+        <button class="btn-main" style="margin-bottom:0" onclick="goStep3()">Continue →</button>
+      </div>
+    </div>
+
+    <!-- ─── REGISTER STEP 3 ─── -->
+    <div class="screen" id="screen-register-3">
+      <span class="back-link" onclick="showScreen('register-2')">← Back</span>
+
+      <div class="step-indicator">
+        <div class="step-dot done">✓</div>
+        <div class="step-line" style="background:linear-gradient(90deg,var(--gold),var(--amber))"></div>
+        <div class="step-dot done">✓</div>
+        <div class="step-line" style="background:linear-gradient(90deg,var(--gold),var(--amber))"></div>
+        <div class="step-dot active">3</div>
+      </div>
+      <div class="step-label-row">
+        <span class="step-label">Account</span>
+        <span class="step-label">Personal</span>
+        <span class="step-label active">Verify</span>
+      </div>
+
+      <div class="eyebrow">Step 3 of 3</div>
+      <div class="form-title">Almost <span class="g">There!</span></div>
+      <div class="form-subtitle">Review your details and agree to our terms</div>
+
+      <div class="summary-card" id="summary-display">
+        <div class="summary-row"><span class="sr-key">Username</span><span class="sr-val" id="sum-user">veluxking99</span></div>
+        <div class="summary-row"><span class="sr-key">Email</span><span class="sr-val" id="sum-email">j***@email.com</span></div>
+        <div class="summary-row"><span class="sr-key">Country</span><span class="sr-val" id="sum-country">United Kingdom</span></div>
+        <div class="summary-row"><span class="sr-key">Currency</span><span class="sr-val" id="sum-currency">USD</span></div>
+      </div>
+
+      <div class="rg-banner">
+        <div class="rg-top"><div class="rg18">18+</div><div class="rg-title">Responsible Gambling</div></div>
+        <div class="rg-desc">Set a daily deposit limit to help you stay in control. This can be changed anytime in your account settings.</div>
+        <div style="font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px">Daily Limit (Optional)</div>
+        <div class="limit-chips">
+          <div class="lchip" onclick="selectChip(this)">$50</div>
+          <div class="lchip" onclick="selectChip(this)">$100</div>
+          <div class="lchip" onclick="selectChip(this)">$200</div>
+          <div class="lchip" onclick="selectChip(this)">$500</div>
+          <div class="lchip" onclick="selectChip(this)">Custom</div>
+          <div class="lchip" onclick="selectChip(this)">Skip</div>
+        </div>
+      </div>
+
+      <label class="check-group"><input type="checkbox" id="chk-age" required><span class="check-label required-check">I confirm I am <strong>18 years or older</strong></span></label>
+      <label class="check-group"><input type="checkbox" id="chk-terms" required><span class="check-label required-check">I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span></label>
+      <label class="check-group"><input type="checkbox" id="chk-promo"><span class="check-label">I'd like to receive promotions and bonus offers by email</span></label>
+
+      <button class="btn-main" onclick="createAccount()">Create Account →</button>
+      <div class="resp-note"><span class="pink-dot">⊛ 18+</span> Gambling involves risk. Please play responsibly.</div>
+    </div>
+
+    <!-- ─── SUCCESS SCREEN ─── -->
+    <div class="screen" id="screen-success">
+      <div class="success-screen">
+        <div class="success-icon-wrap">
+          <div class="success-circle"><span class="success-check">✓</span></div>
+        </div>
+        <div class="success-title">WELCOME TO <span class="g">VELUXPLAY!</span></div>
+        <div class="success-sub">Your account has been created successfully.<br>You're now part of the VeluxPlay community.</div>
+        <div class="bonus-claim-card">
+          <div style="font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,197,24,.7);font-weight:700;margin-bottom:6px">🎁 Your Welcome Bonus is Ready</div>
+          <div class="bc-claim-amount">$1,000 + 200 Free Spins</div>
+          <div class="bc-claim-label">Deposit now to claim your full welcome package</div>
+        </div>
+        <button class="btn-main" onclick="showScreen('login')">Claim Bonus →</button>
+        <button class="btn-ghost" onclick="showScreen('login')" style="margin-top:-10px">Start Playing</button>
+        <div class="email-note">📧 We sent a verification email — please verify within 48 hours</div>
+      </div>
+    </div>
+
+    <!-- ─── FORGOT PASSWORD SCREEN ─── -->
+    <div class="screen" id="screen-forgot">
+      <span class="back-link" onclick="showScreen('login')">← Back to Login</span>
+      <span class="fp-icon">🔐</span>
+      <div class="eyebrow">Password Recovery</div>
+      <div class="form-title">Forgot Your <span class="g">Password?</span></div>
+      <div class="form-subtitle">Enter the email address linked to your account and we'll send a secure reset link</div>
+
+      <div class="form-group">
+        <label class="f-label">Email Address</label>
+        <div class="input-wrap">
+          <input class="f-input" id="fp-email" type="email" placeholder="john@email.com" oninput="validateFpEmail(this)">
+          <span class="input-check" id="fp-email-check"></span>
+        </div>
+        <div class="f-error" id="fp-email-err" style="display:none">⚠ Please enter a valid email address</div>
+      </div>
+
+      <button class="btn-main" onclick="sendReset()">Send Reset Link →</button>
+      <div class="switch-link">Remembered it? <a onclick="showScreen('login')">Back to Login</a></div>
+    </div>
+
+    <!-- ─── RESET SENT SCREEN ─── -->
+    <div class="screen" id="screen-reset-sent">
+      <div style="text-align:center;padding:20px 0">
+        <div class="email-icon-wrap">📧</div>
+        <div class="eyebrow" style="text-align:center">Email Sent</div>
+        <div class="form-title" style="text-align:center">Check Your <span class="g">Inbox</span></div>
+        <div class="form-subtitle" style="text-align:center">We sent a reset link to<br><strong id="sent-email" style="color:var(--white)">j***@email.com</strong></div>
+
+        <div style="background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:18px;margin-bottom:22px;text-align:left">
+          <div style="font-size:.8rem;color:var(--muted);line-height:1.7">
+            ✓ Check your spam/junk folder if not received<br>
+            ✓ Link expires in <strong style="color:var(--gold)">30 minutes</strong><br>
+            ✓ Click the link to set a new password
+          </div>
+        </div>
+
+        <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Didn't receive it?</div>
+        <button class="btn-teal" id="resend-btn" onclick="startResendCountdown()">Resend Email</button>
+        <div class="countdown" id="resend-countdown" style="display:none;text-align:center;margin-bottom:16px">Resend in <span id="countdown-num">60</span>s</div>
+        <div class="switch-link"><a onclick="showScreen('forgot')">← Change Email Address</a></div>
+        <div class="switch-link" style="margin-top:10px"><a onclick="showScreen('login')">Back to Login</a></div>
+      </div>
+    </div>
+
+    <!-- ─── RESET PASSWORD SCREEN ─── -->
+    <div class="screen" id="screen-reset-pw">
+      <span class="back-link" onclick="showScreen('login')">← Back to Login</span>
+      <span class="fp-icon">🔑</span>
+      <div class="eyebrow">New Password</div>
+      <div class="form-title">Reset Your <span class="g">Password</span></div>
+      <div class="form-subtitle">Choose a strong new password for your account</div>
+
+      <div class="form-group">
+        <label class="f-label">New Password</label>
+        <div class="input-wrap">
+          <input class="f-input" id="new-pw" type="password" placeholder="Min 8 characters" oninput="checkNewPwStrength(this)">
+          <span class="input-icon" onclick="togglePw('new-pw',this)">👁</span>
+        </div>
+        <div class="pw-strength">
+          <div class="pw-bars" id="new-pw-bars">
+            <div class="pw-bar" id="nbar1"></div><div class="pw-bar" id="nbar2"></div>
+            <div class="pw-bar" id="nbar3"></div><div class="pw-bar" id="nbar4"></div>
+          </div>
+          <span class="pw-label" id="new-pw-label">Enter a password</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="f-label">Confirm New Password</label>
+        <div class="input-wrap">
+          <input class="f-input" id="new-pw2" type="password" placeholder="Repeat new password" oninput="checkNewPwMatch(this)">
+          <span class="input-icon" onclick="togglePw('new-pw2',this)">👁</span>
+        </div>
+        <div class="f-error" id="new-pw-match-err" style="display:none">⚠ Passwords do not match</div>
+        <div class="f-success" id="new-pw-match-ok" style="display:none">✓ Passwords match</div>
+      </div>
+
+      <button class="btn-main" onclick="resetComplete()">Set New Password →</button>
+    </div>
+
+    <!-- ─── RESET COMPLETE ─── -->
+    <div class="screen" id="screen-reset-done">
+      <div class="success-screen">
+        <div class="success-icon-wrap">
+          <div class="success-circle"><span class="success-check">✓</span></div>
+        </div>
+        <div class="success-title">Password <span class="g">Reset!</span></div>
+        <div class="success-sub">Your password has been updated successfully.<br>You can now log in with your new password.</div>
+        <button class="btn-main" onclick="showScreen('login')" style="margin-top:8px">Back to Login →</button>
+      </div>
+    </div>
+
+  </div><!-- end right panel -->
+</div><!-- end auth-wrapper -->
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const container=document.getElementById('particles');
+  const colors=['rgba(245,197,24,.4)','rgba(255,140,0,.3)','rgba(0,229,204,.3)'];
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*3+1;
+    p.style.cssText=`
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*-20}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// ── SCREEN SWITCHING ──
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById('screen-'+name);
+  if(el)el.classList.add('active');
+
+  // sync left panel
+  const lps=document.querySelectorAll('.lp-section');
+  lps.forEach(l=>l.classList.remove('active'));
+  if(name.startsWith('register')||name==='success'){
+    document.getElementById('lp-register').classList.add('active');
+  } else if(name.startsWith('forgot')||name.startsWith('reset')){
+    document.getElementById('lp-forgot').classList.add('active');
+  } else {
+    document.getElementById('lp-login').classList.add('active');
+  }
+  // scroll right panel to top
+  document.querySelector('.right-panel').scrollTop=0;
+}
+
+// ── TOGGLE PASSWORD ──
+function togglePw(id,icon){
+  const inp=document.getElementById(id);
+  if(inp.type==='password'){inp.type='text';icon.textContent='🙈'}
+  else{inp.type='password';icon.textContent='👁'}
+}
+
+// ── VALIDATE LOGIN EMAIL ──
+function validateLoginEmail(el){
+  const v=el.value.trim();
+  const chk=document.getElementById('login-email-check');
+  const err=document.getElementById('login-email-err');
+  if(v.length>3){
+    el.classList.remove('error');
+    chk.textContent='✓';chk.style.color='var(--green)';
+    err.style.display='none';
+  }
+}
+function validateLoginPw(el){
+  const err=document.getElementById('login-pw-err');
+  if(el.value.length>=6){el.classList.remove('error');err.style.display='none'}
+}
+
+// ── HANDLE LOGIN ──
+function handleLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pw=document.getElementById('login-pw').value;
+  let ok=true;
+  if(!email||email.length<3){
+    document.getElementById('login-email').classList.add('error');
+    document.getElementById('login-email-err').style.display='flex';ok=false;
+  }
+  if(!pw||pw.length<6){
+    document.getElementById('login-pw').classList.add('error');
+    document.getElementById('login-pw-err').style.display='flex';ok=false;
+  }
+  if(ok) showScreen('success'); // demo: go to success
+}
+
+// ── USERNAME CHECK ──
+let usernameTimer;
+function checkUsername(el){
+  const st=document.getElementById('username-status');
+  const chk=document.getElementById('username-check');
+  el.classList.remove('error','success');
+  st.style.display='none';
+  clearTimeout(usernameTimer);
+  if(!el.value) return;
+  st.innerHTML='<span style="color:var(--teal)">⏳ Checking availability...</span>';
+  st.style.display='flex';
+  st.className='avail-status checking';
+  usernameTimer=setTimeout(()=>{
+    const taken=['john123','admin','veluxplay','superuser'];
+    if(taken.includes(el.value.toLowerCase())){
+      el.classList.add('error');
+      st.innerHTML='✗ '+el.value+' is already taken';
+      st.className='avail-status taken';
+      chk.textContent='✗';chk.style.color='var(--pink)';
+    } else if(el.value.length>=3){
+      el.classList.add('success');
+      st.innerHTML='✓ '+el.value+' is available';
+      st.className='avail-status available';
+      chk.textContent='✓';chk.style.color='var(--green)';
+    }
+  },700);
+}
+
+// ── REG EMAIL ──
+function validateRegEmail(el){
+  const err=document.getElementById('reg-email-err');
+  const chk=document.getElementById('reg-email-check');
+  const valid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+  if(el.value&&valid){
+    el.classList.remove('error');el.classList.add('success');
+    chk.textContent='✓';chk.style.color='var(--green)';
+    err.style.display='none';
+  } else if(el.value){
+    el.classList.remove('success');el.classList.add('error');
+    chk.textContent='';err.style.display='flex';
+  }
+}
+
+// ── PASSWORD STRENGTH ──
+function checkPwStrength(el){
+  const pw=el.value;
+  const bars=['bar1','bar2','bar3','bar4'];
+  let strength=0;
+  if(pw.length>=8)strength++;
+  if(/[A-Z]/.test(pw))strength++;
+  if(/[0-9]/.test(pw))strength++;
+  if(/[^A-Za-z0-9]/.test(pw))strength++;
+
+  const labels=['','Weak','Medium','Strong','Very Strong'];
+  const colors=[null,'weak','medium','strong','vstrong'];
+
+  bars.forEach((b,i)=>{
+    const el2=document.getElementById(b);
+    el2.className='pw-bar';
+    if(i<strength) el2.classList.add(colors[strength]||'');
+  });
+  document.getElementById('pw-label').textContent=pw?labels[strength]||'Enter a password':'Enter a password';
+  document.getElementById('pw-label').style.color=strength<=1?'var(--pink)':strength===2?'var(--gold)':strength===3?'var(--teal)':'var(--green)';
+}
+
+function checkNewPwStrength(el){
+  const pw=el.value;
+  let strength=0;
+  if(pw.length>=8)strength++;
+  if(/[A-Z]/.test(pw))strength++;
+  if(/[0-9]/.test(pw))strength++;
+  if(/[^A-Za-z0-9]/.test(pw))strength++;
+  const bars=['nbar1','nbar2','nbar3','nbar4'];
+  const colors=[null,'weak','medium','strong','vstrong'];
+  bars.forEach((b,i)=>{
+    const el2=document.getElementById(b);
+    el2.className='pw-bar';
+    if(i<strength) el2.classList.add(colors[strength]||'');
+  });
+  const labels=['','Weak','Medium','Strong','Very Strong'];
+  document.getElementById('new-pw-label').textContent=pw?labels[strength]||'':'Enter a password';
+}
+
+// ── PASSWORD MATCH ──
+function checkPwMatch(el){
+  const pw1=document.getElementById('reg-pw').value;
+  const err=document.getElementById('pw-match-err');
+  const ok=document.getElementById('pw-match-ok');
+  if(!el.value)return;
+  if(el.value===pw1){err.style.display='none';ok.style.display='flex';el.classList.remove('error');el.classList.add('success')}
+  else{ok.style.display='none';err.style.display='flex';el.classList.add('error');el.classList.remove('success')}
+}
+function checkNewPwMatch(el){
+  const pw1=document.getElementById('new-pw').value;
+  const err=document.getElementById('new-pw-match-err');
+  const ok=document.getElementById('new-pw-match-ok');
+  if(!el.value)return;
+  if(el.value===pw1){err.style.display='none';ok.style.display='flex';el.classList.remove('error');el.classList.add('success')}
+  else{ok.style.display='none';err.style.display='flex';el.classList.add('error');el.classList.remove('success')}
+}
+
+// ── PROMO CODE ──
+function checkPromo(el){
+  const st=document.getElementById('promo-status');
+  if(!el.value){st.style.display='none';return}
+  const valid=['WELCOME100','VIP2025','VELUX50','BONUS200'];
+  if(valid.includes(el.value.toUpperCase())){
+    st.innerHTML='✓ Promo code applied — extra 50 free spins added!';
+    st.className='promo-status valid';st.style.display='flex';
+    el.classList.add('success');el.classList.remove('error');
+  } else if(el.value.length>=4){
+    st.innerHTML='✗ Invalid promo code';
+    st.className='promo-status invalid';st.style.display='flex';
+    el.classList.add('error');el.classList.remove('success');
+  }
+}
+
+// ── RADIO ──
+function selectRadio(el,name){
+  document.querySelectorAll(`[name=${name}]`).forEach(r=>{r.closest('.radio-opt').classList.remove('checked')});
+  el.classList.add('checked');
+}
+
+// ── LIMIT CHIP ──
+function selectChip(el){
+  document.querySelectorAll('.lchip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── POPULATE DOB ──
+(function(){
+  const dayEl=document.getElementById('dob-day');
+  const yearEl=document.getElementById('dob-year');
+  for(let d=1;d<=31;d++){const o=document.createElement('option');o.value=d;o.textContent=d;dayEl.appendChild(o)}
+  const cy=new Date().getFullYear();
+  for(let y=cy-18;y>=cy-100;y--){const o=document.createElement('option');o.value=y;o.textContent=y;yearEl.appendChild(o)}
+})();
+
+// ── STEP NAVIGATION ──
+function goStep2(){
+  const username=document.getElementById('reg-username').value;
+  const email=document.getElementById('reg-email').value;
+  const pw=document.getElementById('reg-pw').value;
+  const pw2=document.getElementById('reg-pw2').value;
+  if(!username||username.length<3||!email||!pw||pw.length<8||pw!==pw2){
+    if(!username||username.length<3) document.getElementById('reg-username').classList.add('error');
+    if(!email) {document.getElementById('reg-email').classList.add('error');document.getElementById('reg-email-err').style.display='flex'}
+    if(!pw||pw.length<8) document.getElementById('reg-pw').classList.add('error');
+    if(pw!==pw2){document.getElementById('reg-pw2').classList.add('error');document.getElementById('pw-match-err').style.display='flex';document.getElementById('pw-match-ok').style.display='none'}
+    return;
+  }
+  showScreen('register-2');
+}
+
+function goStep3(){
+  const fname=document.getElementById('reg-fname').value;
+  const country=document.getElementById('reg-country').value;
+  if(!fname||!country){
+    if(!fname) document.getElementById('reg-fname').classList.add('error');
+    if(!country) document.getElementById('reg-country').classList.add('error');
+    return;
+  }
+  // populate summary
+  const username=document.getElementById('reg-username').value||'veluxking99';
+  const email=document.getElementById('reg-email').value||'j***@email.com';
+  const currency=document.getElementById('reg-currency').value||'USD';
+  document.getElementById('sum-user').textContent=username;
+  const emailParts=email.split('@');
+  document.getElementById('sum-email').textContent=(emailParts[0][0]||'j')+'***@'+(emailParts[1]||'email.com');
+  document.getElementById('sum-country').textContent=country.replace(/^[^\s]+ /,'');
+  document.getElementById('sum-currency').textContent=currency.split(' ')[0];
+  showScreen('register-3');
+}
+
+function createAccount(){
+  const age=document.getElementById('chk-age').checked;
+  const terms=document.getElementById('chk-terms').checked;
+  if(!age||!terms){
+    if(!age) document.getElementById('chk-age').style.outline='2px solid var(--pink)';
+    if(!terms) document.getElementById('chk-terms').style.outline='2px solid var(--pink)';
+    return;
+  }
+  launchConfetti();
+  showScreen('success');
+}
+
+// ── FORGOT PASSWORD ──
+function validateFpEmail(el){
+  const err=document.getElementById('fp-email-err');
+  const chk=document.getElementById('fp-email-check');
+  const valid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+  if(valid){el.classList.remove('error');el.classList.add('success');chk.textContent='✓';chk.style.color='var(--green)';err.style.display='none'}
+  else if(el.value){el.classList.add('error');el.classList.remove('success');chk.textContent='';err.style.display='flex'}
+}
+
+function sendReset(){
+  const email=document.getElementById('fp-email').value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    document.getElementById('fp-email').classList.add('error');
+    document.getElementById('fp-email-err').style.display='flex';
+    return;
+  }
+  const parts=email.split('@');
+  document.getElementById('sent-email').textContent=parts[0][0]+'***@'+parts[1];
+  showScreen('reset-sent');
+}
+
+// ── RESEND COUNTDOWN ──
+let countdownTimer;
+function startResendCountdown(){
+  const btn=document.getElementById('resend-btn');
+  const countdown=document.getElementById('resend-countdown');
+  const numEl=document.getElementById('countdown-num');
+  btn.style.display='none';
+  countdown.style.display='block';
+  let secs=60;
+  numEl.textContent=secs;
+  clearInterval(countdownTimer);
+  countdownTimer=setInterval(()=>{
+    secs--;
+    numEl.textContent=secs;
+    if(secs<=0){
+      clearInterval(countdownTimer);
+      btn.style.display='block';
+      countdown.style.display='none';
+    }
+  },1000);
+}
+
+// ── RESET COMPLETE ──
+function resetComplete(){
+  const pw=document.getElementById('new-pw').value;
+  const pw2=document.getElementById('new-pw2').value;
+  if(!pw||pw.length<8||pw!==pw2){
+    if(!pw||pw.length<8) document.getElementById('new-pw').classList.add('error');
+    if(pw!==pw2){document.getElementById('new-pw2').classList.add('error');document.getElementById('new-pw-match-err').style.display='flex'}
+    return;
+  }
+  showScreen('reset-done');
+}
+
+// ── CONFETTI ──
+function launchConfetti(){
+  const container=document.getElementById('confetti');
+  const colors=['#F5C518','#FF8C00','#00E5CC','#FF2D55','#00CC66','#ffffff'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const drift=(Math.random()*200-100)+'px';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      background:${color};
+      animation-duration:${Math.random()*2+2}s;
+      animation-delay:${Math.random()*1}s;
+      --drift:${drift};
+      width:${Math.random()*8+4}px;
+      height:${Math.random()*12+6}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),4000);
+  }
+}
+
+// ── DEMO SHORTCUTS ──
+// Add demo nav buttons for preview purposes
+document.addEventListener('keydown',e=>{
+  if(e.key==='1')showScreen('login');
+  if(e.key==='2')showScreen('register-1');
+  if(e.key==='3')showScreen('register-2');
+  if(e.key==='4')showScreen('register-3');
+  if(e.key==='5'){launchConfetti();showScreen('success')}
+  if(e.key==='6')showScreen('forgot');
+  if(e.key==='7')showScreen('reset-sent');
+  if(e.key==='8')showScreen('reset-pw');
+  if(e.key==='9'){showScreen('reset-done')}
+});
+</script>
+</body>
+</html>
