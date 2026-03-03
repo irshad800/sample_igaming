@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WINCO – Play • Win • Repeat</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lime: #C9F500;
+  --lime-dark: #a8cc00;
+  --yellow: #FFD700;
+  --red: #FF2D2D;
+  --bg: #0D0D0D;
+  --bg2: #141414;
+  --bg3: #1A1A1A;
+  --bg4: #1F1F1F;
+  --border: rgba(201,245,0,0.12);
+  --border2: rgba(255,255,255,0.07);
+  --text: #FFFFFF;
+  --muted: #7A7A7A;
+  --font-display: 'Anton', sans-serif;
+  --font-ui: 'Rajdhani', sans-serif;
+  --font-head: 'Oswald', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
+
+/* ══════════════════════════════
+   TOP UTILITY BAR
+══════════════════════════════ */
+.topbar {
+  background: #080808;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.topbar-item {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.topbar-item span { color: var(--lime); }
+
+.live-badge {
+  background: var(--red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: livePulse 2s ease infinite;
+}
+
+@keyframes livePulse {
+  0%,100% { opacity:1; }
+  50% { opacity:0.7; }
+}
+
+.live-badge::before {
+  content:'';
+  width:5px; height:5px;
+  background:#fff;
+  border-radius:50%;
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(0.6);opacity:0.4} }
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════
+   HEADER
+══════════════════════════════ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(13,13,13,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+}
+
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.logo-mark {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: var(--bg);
+  background: var(--lime);
+  padding: 4px 14px 2px;
+  line-height: 1;
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+}
+
+.logo-sub {
+  font-family: var(--font-head);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding-left: 10px;
+  border-left: 2px solid var(--border);
+  margin-left: 12px;
+  line-height: 1.3;
+}
+
+/* Nav */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+.nav-link {
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0 18px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: color 0.2s;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover { color: #fff; }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active { color: var(--lime); }
+.nav-link.active::after { transform: scaleX(1); }
+
+.nav-live {
+  color: var(--red) !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-live .dot {
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse 1s ease infinite;
+}
+
+/* Header CTA */
+.header-cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.btn-outline {
+  padding: 9px 22px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+
+.btn-primary {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 4px;
+  background: var(--lime);
+  color: #000;
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+
+.btn-primary:hover { background: #d8ff00; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,245,0,0.35); }
+.btn-primary:hover::after { opacity:1; }
+
+/* ══════════════════════════════
+   SPORT TABS
+══════════════════════════════ */
+.sport-tabs-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sport-tabs-bar::-webkit-scrollbar { display:none; }
+
+.sport-tabs-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 46px;
+}
+
+.sport-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px;
+  height: 46px;
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  transition: color 0.2s;
+  border-right: 1px solid var(--border2);
+}
+
+.sport-tab:first-child { border-left: none; }
+
+.sport-tab::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:2px;
+  background: var(--lime);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.sport-tab:hover { color:#fff; }
+.sport-tab:hover::after { transform:scaleX(1); }
+.sport-tab.active { color: var(--lime); }
+.sport-tab.active::after { transform:scaleX(1); }
+
+.sport-tab .tab-icon { font-size:16px; }
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+  background: #080808;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero-slide.active { opacity: 1; }
+
+/* Dark geometric bg */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, #000 0%, #0a0f00 40%, #050a00 100%);
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  right: -5%;
+  top: -10%;
+  width: 65%;
+  height: 120%;
+  background: linear-gradient(135deg, #141e00 0%, #0a1200 100%);
+  clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(ellipse at 70% 50%, rgba(201,245,0,0.08) 0%, transparent 65%);
+}
+
+/* Grid lines */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,245,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,245,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Diagonal slash accent */
+.hero-slash {
+  position: absolute;
+  left: 38%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--lime), transparent);
+  opacity: 0.5;
+  transform: skewX(-8deg);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-left { max-width: 600px; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201,245,0,0.08);
+  border: 1px solid rgba(201,245,0,0.25);
+  border-left: 3px solid var(--lime);
+  padding: 6px 16px;
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 22px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 0.88;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+
+.hero-title .accent {
+  color: var(--lime);
+  display: block;
+  -webkit-text-stroke: 0px;
+  text-shadow: 0 0 60px rgba(201,245,0,0.4);
+}
+
+.hero-title .stroke {
+  -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+  color: transparent;
+  display: block;
+}
+
+.hero-sub {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  max-width: 400px;
+  margin-bottom: 36px;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+.btn-hero {
+  padding: 14px 36px;
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.btn-hero-lime {
+  background: var(--lime);
+  color: #000;
+  box-shadow: 0 8px 30px rgba(201,245,0,0.3);
+}
+.btn-hero-lime:hover { background: #d8ff00; transform:translateY(-2px); box-shadow:0 12px 40px rgba(201,245,0,0.5); }
+
+.btn-hero-ghost {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.15);
+}
+.btn-hero-ghost:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3); }
+
+/* Bonus panel */
+.hero-panel {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(201,245,0,0.2);
+  border-top: 3px solid var(--lime);
+  width: 300px;
+  padding: 28px;
+  position: relative;
+  animation: fadeLeft 0.6s ease 0.3s both;
+  backdrop-filter: blur(10px);
+}
+
+.hero-panel::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background: linear-gradient(90deg, var(--lime), transparent);
+}
+
+.panel-label {
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 10px;
+}
+
+.panel-value {
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.panel-value span { color: var(--lime); }
+
+.panel-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.panel-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.panel-stat-item { }
+.panel-stat-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--lime);
+  line-height: 1;
+}
+.panel-stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.panel-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--lime);
+  border: none;
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+}
+.panel-btn:hover { background: #d8ff00; box-shadow: 0 6px 20px rgba(201,245,0,0.4); }
+
+/* Countdown */
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+}
+
+.cd-unit {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 4px;
+  text-align: center;
+}
+.cd-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #fff;
+  display: block;
+  line-height: 1;
+}
+.cd-label {
+  font-size: 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.cd-sep {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--lime);
+  margin-bottom: 8px;
+}
+
+/* Slide dots */
+.hero-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 64px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 28px;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.hero-dot.active { background: var(--lime); width: 48px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+
+/* ══════════════════════════════
+   TRUST BAR
+══════════════════════════════ */
+.trust-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+}
+
+.trust-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  height: 70px;
+}
+
+.trust-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 28px;
+  border-right: 1px solid var(--border2);
+  transition: background 0.2s;
+}
+.trust-item:last-child { border-right:none; }
+.trust-item:hover { background: rgba(201,245,0,0.03); }
+
+.trust-icon-box {
+  width: 38px;
+  height: 38px;
+  background: rgba(201,245,0,0.08);
+  border: 1px solid rgba(201,245,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.trust-stat {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--lime);
+  line-height: 1;
+}
+
+.trust-desc {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* ══════════════════════════════
+   SECTION COMMONS
+══════════════════════════════ */
+.section { padding: 48px 0; }
+.section-alt { background: var(--bg2); }
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.sec-title-wrap { display:flex; align-items:center; gap:12px; }
+
+.sec-accent-bar {
+  width: 4px;
+  height: 32px;
+  background: var(--lime);
+  flex-shrink: 0;
+}
+
+.sec-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.sec-sub {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+.sec-link {
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--lime);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  border-bottom: 1px solid rgba(201,245,0,0.3);
+  padding-bottom: 2px;
+}
+.sec-link:hover { opacity:1; }
+
+/* ══════════════════════════════
+   POPULAR GAMES
+══════════════════════════════ */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+}
+
+.game-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 2/3;
+  background: var(--bg3);
+  group: true;
+}
+
+.game-card:hover .gc-img-wrap { transform: scale(1.06); }
+.game-card:hover .gc-overlay { background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.05) 100%); }
+.game-card:hover .gc-play { opacity:1; transform:translateY(0); }
+.game-card:hover .gc-border { opacity:1; }
+
+.gc-img-wrap {
+  width:100%;
+  height:100%;
+  transition: transform 0.5s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 80px;
+}
+
+.gc-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  transition: background 0.3s ease;
+}
+
+.gc-border {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--lime);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gc-badge {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  padding: 4px 12px 4px 10px;
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+}
+.badge-live { background: var(--red); color: #fff; }
+.badge-hot { background: var(--lime); color: #000; }
+.badge-new { background: #fff; color: #000; }
+
+.gc-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 16px;
+}
+
+.gc-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.gc-players {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.gc-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--lime);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s ease;
+}
+
+/* Game card colors */
+.gc-1 { background: linear-gradient(160deg, #080f00, #162a00); }
+.gc-2 { background: linear-gradient(160deg, #000a1a, #001840); }
+.gc-3 { background: linear-gradient(160deg, #0d0000, #2a0000); }
+.gc-4 { background: linear-gradient(160deg, #050510, #0f0f30); }
+.gc-5 { background: linear-gradient(160deg, #100800, #302000); }
+
+/* ══════════════════════════════
+   TURBO / INSTANT GAMES
+══════════════════════════════ */
+.turbo-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+}
+
+.turbo-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 22px 12px 18px;
+  text-align: center;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.turbo-card:hover {
+  background: var(--bg4);
+  border-bottom-color: var(--lime);
+  transform: translateY(-3px);
+}
+
+.turbo-card:hover .turbo-icon { transform: scale(1.15); }
+.turbo-card:hover .turbo-name { color: var(--lime); }
+
+.turbo-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(circle at 50% 30%, rgba(201,245,0,0.08) 0%, transparent 70%);
+}
+.turbo-card:hover .turbo-glow { opacity: 1; }
+
+.turbo-icon {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 10px;
+  transition: transform 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.turbo-name {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  transition: color 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.turbo-tag {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════
+   TRENDING SLOTS
+══════════════════════════════ */
+.slots-row {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.slots-row::-webkit-scrollbar { display:none; }
+
+.slot-card {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--bg3);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  transition: all 0.25s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.slot-card:hover {
+  border-bottom-color: var(--lime);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.slot-card:hover .slot-play-overlay { opacity: 1; }
+
+.slot-img {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  position: relative;
+}
+
+.slot-play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.slot-play-btn {
+  width: 46px;
+  height: 46px;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #000;
+  font-weight: 900;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.slot-info { padding: 10px 12px 12px; }
+
+.slot-name {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.slot-provider {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.slot-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  font-family: var(--font-head);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.sb-hot { background: var(--lime); color: #000; }
+.sb-new { background: var(--red); color: #fff; }
+
+/* Slot bg variants */
+.sg1 { background: linear-gradient(135deg,#200040,#500080); }
+.sg2 { background: linear-gradient(135deg,#002010,#005530); }
+.sg3 { background: linear-gradient(135deg,#301000,#803000); }
+.sg4 { background: linear-gradient(135deg,#001030,#003080); }
+.sg5 { background: linear-gradient(135deg,#201800,#504000); }
+.sg6 { background: linear-gradient(135deg,#300020,#800060); }
+.sg7 { background: linear-gradient(135deg,#002020,#005555); }
+.sg8 { background: linear-gradient(135deg,#100800,#402000); }
+
+/* ══════════════════════════════
+   PROMOTIONS
+══════════════════════════════ */
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.promo-card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 24px;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  border-top: 3px solid transparent;
+  background: var(--bg3);
+  transition: all 0.25s ease;
+}
+
+.promo-card:hover { transform:translateY(-3px); border-top-color: var(--lime); background: var(--bg4); }
+.promo-card:hover .promo-arrow { transform: translateX(4px); }
+
+.promo-tag {
+  font-family: var(--font-head);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.promo-tag::before {
+  content:'';
+  width: 16px;
+  height: 2px;
+  background: var(--lime);
+}
+
+.promo-value {
+  font-family: var(--font-display);
+  font-size: 52px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.promo-value .highlight { color: var(--lime); }
+
+.promo-title {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.promo-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.promo-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+.promo-arrow { transition: transform 0.25s ease; }
+
+/* ══════════════════════════════
+   FOOTER STRIP
+══════════════════════════════ */
+.footer-strip {
+  background: #080808;
+  border-top: 1px solid var(--border2);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.pay-icon {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 6px 14px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.pay-icon:hover { color:#fff; border-color:rgba(255,255,255,0.2); }
+
+.footer-note {
+  font-size: 11px;
+  color: #333;
+  letter-spacing: 0.5px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     TOPBAR
+══════════════════════════════ -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-item"><span>🕐</span> IST 14:32</div>
+    <div class="live-badge">LIVE</div>
+    <div class="topbar-item">IPL 2025 — <span>CSK vs MI · In Progress</span></div>
+    <div class="topbar-item">|</div>
+    <div class="topbar-item">Premier League — <span>Arsenal vs Chelsea · 67'</span></div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-item">🇮🇳 IN</div>
+    <div class="topbar-item">🌐 EN</div>
+    <div class="topbar-item">Support</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     HEADER
+══════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-mark">WINCO</div>
+      <div class="logo-sub">Play<br>Win · Repeat</div>
+    </a>
+
+    <nav class="main-nav">
+      <a class="nav-link active" href="#">Sports</a>
+      <a class="nav-link nav-live" href="#"><span class="dot"></span>Live</a>
+      <a class="nav-link" href="#">Casino</a>
+      <a class="nav-link" href="#">Slots</a>
+      <a class="nav-link" href="#">Aviator</a>
+      <a class="nav-link" href="#">Promotions</a>
+    </nav>
+
+    <div class="header-cta">
+      <button class="btn-outline">Log In</button>
+      <button class="btn-primary">Register</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     SPORT TABS
+══════════════════════════════ -->
+<div class="sport-tabs-bar">
+  <div class="sport-tabs-inner">
+    <div class="sport-tab active"><span class="tab-icon">🏏</span> Cricket</div>
+    <div class="sport-tab"><span class="tab-icon">⚽</span> Football</div>
+    <div class="sport-tab"><span class="tab-icon">🎾</span> Tennis</div>
+    <div class="sport-tab"><span class="tab-icon">🏀</span> Basketball</div>
+    <div class="sport-tab"><span class="tab-icon">🏒</span> Hockey</div>
+    <div class="sport-tab"><span class="tab-icon">🏉</span> Rugby</div>
+    <div class="sport-tab"><span class="tab-icon">🎮</span> Esports</div>
+    <div class="sport-tab"><span class="tab-icon">🥊</span> MMA</div>
+    <div class="sport-tab"><span class="tab-icon">🥊</span> Boxing</div>
+    <div class="sport-tab"><span class="tab-icon">🏐</span> Volleyball</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<div class="hero">
+  <!-- Slide 1 -->
+  <div class="hero-slide active">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-slash"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow">🎁 Welcome Offer · New Players Only</div>
+        <h1 class="hero-title">
+          WIN STREAK<br>
+          <span class="accent">BONUS</span>
+          <span class="stroke">100%</span>
+        </h1>
+        <p class="hero-sub">Double your first deposit. Join 10M+ players on India's fastest growing betting platform.</p>
+        <div class="hero-btns">
+          <button class="btn-hero btn-hero-lime">🎯 Claim Bonus</button>
+          <button class="btn-hero btn-hero-ghost">▶ Watch Demo</button>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="panel-label">🔥 Win Streak Bonus</div>
+        <div class="panel-value"><span>100</span>%</div>
+        <div class="panel-desc">On your first deposit — Min ₹500</div>
+        <div class="panel-stats">
+          <div class="panel-stat-item">
+            <div class="panel-stat-num">10M+</div>
+            <div class="panel-stat-label">Players</div>
+          </div>
+          <div class="panel-stat-item">
+            <div class="panel-stat-num">⚡ Instant</div>
+            <div class="panel-stat-label">Withdrawal</div>
+          </div>
+        </div>
+        <button class="panel-btn">Register & Claim Now</button>
+        <div class="countdown">
+          <div class="cd-unit"><span class="cd-num" id="h">08</span><span class="cd-label">Hrs</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><span class="cd-num" id="m">42</span><span class="cd-label">Min</span></div>
+          <div class="cd-sep">:</div>
+          <div class="cd-unit"><span class="cd-num" id="s">17</span><span class="cd-label">Sec</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="hero-slide">
+    <div class="hero-bg" style="background:linear-gradient(110deg,#000 0%,#001a10 40%,#000a08 100%);">
+      <div class="hero-grid"></div>
+      <div class="hero-slash" style="background:linear-gradient(to bottom,transparent,#00ff88,transparent);"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow" style="border-left-color:#00ff88;color:#00ff88;background:rgba(0,255,136,0.06);border-color:rgba(0,255,136,0.2);">🏏 IPL 2025 · Live Betting</div>
+        <h1 class="hero-title">
+          BET ON<br>
+          <span class="accent" style="color:#00ff88;text-shadow:0 0 60px rgba(0,255,136,0.4);">IPL LIVE</span>
+          <span class="stroke">NOW</span>
+        </h1>
+        <p class="hero-sub">Real-time odds, live streaming, and instant payouts. The biggest cricket season is here.</p>
+        <div class="hero-btns">
+          <button class="btn-hero btn-hero-lime" style="background:#00ff88;">🏏 Bet Now</button>
+          <button class="btn-hero btn-hero-ghost">📊 View Odds</button>
+        </div>
+      </div>
+      <div class="hero-panel" style="border-top-color:#00ff88;">
+        <div class="panel-label" style="color:#00ff88;">🏆 Free Bet — IPL Special</div>
+        <div class="panel-value"><span style="color:#00ff88;">₹500</span></div>
+        <div class="panel-desc">Free bet on any IPL match today</div>
+        <div class="panel-stats">
+          <div class="panel-stat-item">
+            <div class="panel-stat-num" style="color:#00ff88;">50+</div>
+            <div class="panel-stat-label">Live Markets</div>
+          </div>
+          <div class="panel-stat-item">
+            <div class="panel-stat-num" style="color:#00ff88;">24/7</div>
+            <div class="panel-stat-label">Support</div>
+          </div>
+        </div>
+        <button class="panel-btn" style="background:#00ff88;">Claim Free Bet</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-dots">
+    <div class="hero-dot active" onclick="setSlide(0)"></div>
+    <div class="hero-dot" onclick="setSlide(1)"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TRUST BAR
+══════════════════════════════ -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon-box">👥</div>
+      <div><div class="trust-stat">10M+</div><div class="trust-desc">Active Players</div></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-box">⚡</div>
+      <div><div class="trust-stat">Instant</div><div class="trust-desc">Withdrawals</div></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-box">🏆</div>
+      <div><div class="trust-stat">50+</div><div class="trust-desc">Sport Markets</div></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-box">🔒</div>
+      <div><div class="trust-stat">100%</div><div class="trust-desc">Safe & Secure</div></div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon-box">🎧</div>
+      <div><div class="trust-stat">24/7</div><div class="trust-desc">Live Support</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     POPULAR GAMES
+══════════════════════════════ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-title-wrap">
+        <div class="sec-accent-bar"></div>
+        <div>
+          <div class="sec-title">Popular Games</div>
+          <div class="sec-sub">Most played this week</div>
+        </div>
+      </div>
+      <a href="#" class="sec-link">View All <span>→</span></a>
+    </div>
+    <div class="games-grid">
+      <div class="game-card gc-1">
+        <div class="gc-img-wrap">🏏</div>
+        <div class="gc-overlay"></div>
+        <div class="gc-border"></div>
+        <span class="gc-badge badge-live">● Live</span>
+        <div class="gc-info">
+          <div class="gc-name">Cricket</div>
+          <div class="gc-players">2.4M playing now</div>
+          <div class="gc-play">▶ Play Now →</div>
+        </div>
+      </div>
+      <div class="game-card gc-2">
+        <div class="gc-img-wrap">🎮</div>
+        <div class="gc-overlay"></div>
+        <div class="gc-border"></div>
+        <span class="gc-badge badge-hot">🔥 Hot</span>
+        <div class="gc-info">
+          <div class="gc-name">E-Sports</div>
+          <div class="gc-players">890K playing now</div>
+          <div class="gc-play">▶ Play Now →</div>
+        </div>
+      </div>
+      <div class="game-card gc-3">
+        <div class="gc-img-wrap">⚽</div>
+        <div class="gc-overlay"></div>
+        <div class="gc-border"></div>
+        <span class="gc-badge badge-live">● Live</span>
+        <div class="gc-info">
+          <div class="gc-name">Football</div>
+          <div class="gc-players">1.8M playing now</div>
+          <div class="gc-play">▶ Play Now →</div>
+        </div>
+      </div>
+      <div class="game-card gc-4">
+        <div class="gc-img-wrap">🌀</div>
+        <div class="gc-overlay"></div>
+        <div class="gc-border"></div>
+        <span class="gc-badge badge-new">NEW</span>
+        <div class="gc-info">
+          <div class="gc-name">Crazy Time</div>
+          <div class="gc-players">550K playing now</div>
+          <div class="gc-play">▶ Play Now →</div>
+        </div>
+      </div>
+      <div class="game-card gc-5">
+        <div class="gc-img-wrap">🃏</div>
+        <div class="gc-overlay"></div>
+        <div class="gc-border"></div>
+        <span class="gc-badge badge-hot">🔥 Hot</span>
+        <div class="gc-info">
+          <div class="gc-name">Andar Bahar</div>
+          <div class="gc-players">1.1M playing now</div>
+          <div class="gc-play">▶ Play Now →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TURBO / INSTANT GAMES
+══════════════════════════════ -->
+<div class="section section-alt">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-title-wrap">
+        <div class="sec-accent-bar"></div>
+        <div>
+          <div class="sec-title">Turbo Games</div>
+          <div class="sec-sub">Instant win — No waiting</div>
+        </div>
+      </div>
+      <a href="#" class="sec-link">All Games →</a>
+    </div>
+    <div class="turbo-grid">
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">✈️</span><div class="turbo-name">Aviator</div><div class="turbo-tag">Crash</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">💣</span><div class="turbo-name">Mines</div><div class="turbo-tag">Skill</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">🎯</span><div class="turbo-name">Plinko</div><div class="turbo-tag">Instant</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">🎲</span><div class="turbo-name">Dice</div><div class="turbo-tag">Classic</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">⚽</span><div class="turbo-name">Goal</div><div class="turbo-tag">Sports</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">🔺</span><div class="turbo-name">Hilo</div><div class="turbo-tag">Cards</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">📟</span><div class="turbo-name">Hotline</div><div class="turbo-tag">Arcade</div></div>
+      <div class="turbo-card"><div class="turbo-glow"></div><span class="turbo-icon">🃏</span><div class="turbo-name">Keon</div><div class="turbo-tag">Cards</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TRENDING SLOTS
+══════════════════════════════ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-title-wrap">
+        <div class="sec-accent-bar"></div>
+        <div>
+          <div class="sec-title">Trending Slots</div>
+          <div class="sec-sub">Top picks this week</div>
+        </div>
+      </div>
+      <a href="#" class="sec-link">All Slots →</a>
+    </div>
+    <div class="slots-row">
+      <div class="slot-card"><div class="slot-img sg1"><span>🀄</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Mahjong Ways</div><div class="slot-provider">PG Soft</div></div><span class="slot-badge sb-hot">HOT</span></div>
+      <div class="slot-card"><div class="slot-img sg2"><span>🐉</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Dragon Fortune</div><div class="slot-provider">Pragmatic</div></div></div>
+      <div class="slot-card"><div class="slot-img sg3"><span>🗿</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Aztec Bonanza</div><div class="slot-provider">PG Soft</div></div><span class="slot-badge sb-new">NEW</span></div>
+      <div class="slot-card"><div class="slot-img sg4"><span>🐱</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Lucky Neko</div><div class="slot-provider">PG Soft</div></div></div>
+      <div class="slot-card"><div class="slot-img sg5"><span>🤠</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Wild West Gold</div><div class="slot-provider">Pragmatic</div></div><span class="slot-badge sb-hot">HOT</span></div>
+      <div class="slot-card"><div class="slot-img sg6"><span>🧜</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Mermaid Riches</div><div class="slot-provider">Habanero</div></div></div>
+      <div class="slot-card"><div class="slot-img sg7"><span>🍀</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Lucky Clover</div><div class="slot-provider">PG Soft</div></div></div>
+      <div class="slot-card"><div class="slot-img sg8"><span>🏴‍☠️</span><div class="slot-play-overlay"><div class="slot-play-btn">▶</div></div></div><div class="slot-info"><div class="slot-name">Pirate Queen</div><div class="slot-provider">Spadegaming</div></div><span class="slot-badge sb-new">NEW</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PROMOTIONS
+══════════════════════════════ -->
+<div class="section section-alt">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-title-wrap">
+        <div class="sec-accent-bar"></div>
+        <div>
+          <div class="sec-title">Promotions</div>
+          <div class="sec-sub">Exclusive deals for all players</div>
+        </div>
+      </div>
+      <a href="#" class="sec-link">All Offers →</a>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-card">
+        <div class="promo-tag">Welcome Bonus</div>
+        <div class="promo-value"><span class="highlight">100%</span></div>
+        <div class="promo-title">First Deposit Match</div>
+        <div class="promo-desc">Double your first deposit. Min ₹500 required. New players only.</div>
+        <div class="promo-cta">Claim Now <span class="promo-arrow">→</span></div>
+      </div>
+      <div class="promo-card">
+        <div class="promo-tag">VIP Rewards</div>
+        <div class="promo-value"><span class="highlight">15%</span></div>
+        <div class="promo-title">Weekly Cashback</div>
+        <div class="promo-desc">Exclusive cashback every week for VIP members. No wagering required.</div>
+        <div class="promo-cta">Join VIP <span class="promo-arrow">→</span></div>
+      </div>
+      <div class="promo-card">
+        <div class="promo-tag">Free Bet</div>
+        <div class="promo-value"><span class="highlight">₹500</span></div>
+        <div class="promo-title">Place 5, Get 1 Free</div>
+        <div class="promo-desc">Place 5 qualifying bets and receive a ₹500 free bet automatically.</div>
+        <div class="promo-cta">Get Free Bet <span class="promo-arrow">→</span></div>
+      </div>
+      <div class="promo-card">
+        <div class="promo-tag">Refer & Earn</div>
+        <div class="promo-value"><span class="highlight">₹100</span></div>
+        <div class="promo-title">Per Referral</div>
+        <div class="promo-desc">Invite friends using your code and earn ₹100 for every successful signup.</div>
+        <div class="promo-cta">Refer Now <span class="promo-arrow">→</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     FULL FOOTER
+══════════════════════════════ -->
+<footer class="site-footer">
+
+  <!-- Top CTA Banner -->
+  <div class="footer-cta-band">
+    <div class="footer-cta-inner">
+      <div class="footer-cta-left">
+        <div class="footer-cta-label">🎯 Ready to Win?</div>
+        <div class="footer-cta-title">JOIN 10M+ PLAYERS TODAY</div>
+        <div class="footer-cta-sub">Instant signup · No deposit required to explore</div>
+      </div>
+      <div class="footer-cta-right">
+        <button class="fcta-btn-lime">Create Free Account →</button>
+        <button class="fcta-btn-ghost">Download App</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer Grid -->
+  <div class="footer-main">
+    <div class="footer-grid">
+
+      <!-- Brand Column -->
+      <div class="footer-col footer-col-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">WINCO</div>
+          <div class="footer-logo-tag">Play · Win · Repeat</div>
+        </div>
+        <p class="footer-about">India's premier online betting platform with 50+ sports markets, live casino, and instant payouts. Licensed, secure and trusted by millions.</p>
+        <div class="footer-social">
+          <div class="social-label">Follow Us</div>
+          <div class="social-icons">
+            <a href="#" class="social-btn" title="Instagram">📸</a>
+            <a href="#" class="social-btn" title="Twitter/X">𝕏</a>
+            <a href="#" class="social-btn" title="Telegram">✈</a>
+            <a href="#" class="social-btn" title="YouTube">▶</a>
+            <a href="#" class="social-btn" title="Facebook">f</a>
+          </div>
+        </div>
+        <div class="footer-app-btns">
+          <a href="#" class="app-btn">
+            <span class="app-icon">🍎</span>
+            <div><div class="app-small">Download on</div><div class="app-big">App Store</div></div>
+          </a>
+          <a href="#" class="app-btn">
+            <span class="app-icon">▶</span>
+            <div><div class="app-small">Get it on</div><div class="app-big">Google Play</div></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#">🏠 Home</a></li>
+          <li><a href="#">🏏 Cricket Betting</a></li>
+          <li><a href="#">⚽ Football Betting</a></li>
+          <li><a href="#">🎮 E-Sports</a></li>
+          <li><a href="#">🃏 Live Casino</a></li>
+          <li><a href="#">✈️ Aviator</a></li>
+          <li><a href="#">🎰 Slots</a></li>
+          <li><a href="#">🎁 Promotions</a></li>
+          <li><a href="#">📊 Live Scores</a></li>
+        </ul>
+      </div>
+
+      <!-- Sports -->
+      <div class="footer-col">
+        <div class="footer-col-title">Sports Markets</div>
+        <ul class="footer-links">
+          <li><a href="#">🏏 IPL 2025</a></li>
+          <li><a href="#">⚽ Premier League</a></li>
+          <li><a href="#">🎾 Wimbledon</a></li>
+          <li><a href="#">🏀 NBA</a></li>
+          <li><a href="#">🏒 Ice Hockey</a></li>
+          <li><a href="#">🏉 Rugby Union</a></li>
+          <li><a href="#">🥊 UFC / MMA</a></li>
+          <li><a href="#">🥊 Boxing</a></li>
+          <li><a href="#">🏐 Volleyball</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <ul class="footer-links">
+          <li><a href="#">💬 Live Chat</a></li>
+          <li><a href="#">📧 Email Support</a></li>
+          <li><a href="#">📞 Call Us</a></li>
+          <li><a href="#">❓ FAQ</a></li>
+          <li><a href="#">📖 How to Deposit</a></li>
+          <li><a href="#">💸 How to Withdraw</a></li>
+          <li><a href="#">🔐 Responsible Gaming</a></li>
+          <li><a href="#">🛡️ Account Security</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">🏢 About Winco</a></li>
+          <li><a href="#">📜 Terms & Conditions</a></li>
+          <li><a href="#">🔒 Privacy Policy</a></li>
+          <li><a href="#">🍪 Cookie Policy</a></li>
+          <li><a href="#">⚖️ Betting Rules</a></li>
+          <li><a href="#">💼 Careers</a></li>
+          <li><a href="#">📰 Blog & News</a></li>
+          <li><a href="#">🤝 Affiliates</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="footer-payments">
+      <div class="footer-payments-label">Accepted Payment Methods</div>
+      <div class="footer-payments-row">
+        <div class="pay-tile">
+          <span class="pay-tile-icon">💳</span>
+          <span>UPI</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">📱</span>
+          <span>GPay</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">📱</span>
+          <span>PhonePe</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">🏦</span>
+          <span>Net Banking</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">💙</span>
+          <span>Paytm</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">💳</span>
+          <span>Visa</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">💳</span>
+          <span>Mastercard</span>
+        </div>
+        <div class="pay-tile">
+          <span class="pay-tile-icon">₿</span>
+          <span>Crypto</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Providers -->
+    <div class="footer-providers">
+      <div class="footer-payments-label">Game Providers</div>
+      <div class="footer-providers-row">
+        <div class="provider-tile">PG Soft</div>
+        <div class="provider-tile">Pragmatic Play</div>
+        <div class="provider-tile">Evolution</div>
+        <div class="provider-tile">Habanero</div>
+        <div class="provider-tile">Spadegaming</div>
+        <div class="provider-tile">Galeta</div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="footer-disclaimer">
+      <div class="disclaimer-icon">🛡️</div>
+      <p><strong>Winco</strong> is the best platform for live and uninterrupted online betting for sports. Win life betting with a wide spectrum of sports such as Cricket, Soccer, Horse Racing, Kabaddi, Andar Bahar, Hockey, Basketball and many more. You can place bets and receive winnings instantly on your UPI ID — so you can be sure that all your money is safe and secure. <span class="disc-highlight">Gambling can be addictive, please play responsibly.</span></p>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div class="footer-bottom-left">
+        <span class="footer-logo-small">WINCO</span>
+        <span class="footer-copy">© Copyright 2025 Winco. All Rights Reserved.</span>
+      </div>
+      <div class="footer-bottom-center">
+        <div class="age-badge">18+</div>
+        <span class="footer-resp">Please gamble responsibly</span>
+        <a href="#" class="footer-legal-link">Terms</a>
+        <a href="#" class="footer-legal-link">Privacy</a>
+        <a href="#" class="footer-legal-link">Responsible Gaming</a>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="secure-badge">🔒 SSL Secured</div>
+        <div class="secure-badge">✅ Licensed</div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<style>
+/* ══ FOOTER STYLES ══ */
+.site-footer {
+  background: #080808;
+  border-top: 1px solid rgba(201,245,0,0.1);
+  margin-top: 0;
+}
+
+/* CTA Band */
+.footer-cta-band {
+  background: linear-gradient(110deg, #0f1800 0%, #141f00 50%, #0a1000 100%);
+  border-bottom: 1px solid rgba(201,245,0,0.12);
+  border-top: 3px solid var(--lime);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-cta-band::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 40%;
+  background: radial-gradient(ellipse at right, rgba(201,245,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.footer-cta-band::after {
+  content: 'WINCO';
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 120px;
+  color: rgba(201,245,0,0.04);
+  letter-spacing: 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer-cta-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 36px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.footer-cta-label {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 8px;
+}
+
+.footer-cta-title {
+  font-family: var(--font-display);
+  font-size: 38px;
+  letter-spacing: 2px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.footer-cta-sub {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.footer-cta-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.fcta-btn-lime {
+  padding: 13px 32px;
+  background: var(--lime);
+  border: none;
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.fcta-btn-lime:hover { background: #d8ff00; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,245,0,0.35); }
+
+.fcta-btn-ghost {
+  padding: 13px 28px;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.fcta-btn-ghost:hover { border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.05); }
+
+/* Main Footer */
+.footer-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 52px 32px 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 36px;
+}
+
+/* Brand col */
+.footer-logo-mark {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 4px;
+  color: #000;
+  background: var(--lime);
+  display: inline-block;
+  padding: 4px 16px 2px;
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+  margin-bottom: 4px;
+}
+
+.footer-logo-tag {
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.footer-about {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-weight: 500;
+  max-width: 290px;
+}
+
+.footer-social { margin-bottom: 20px; }
+
+.social-label {
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.social-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: var(--font-head);
+}
+.social-btn:hover {
+  background: var(--lime);
+  color: #000;
+  border-color: var(--lime);
+  transform: translateY(-2px);
+}
+
+.footer-app-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.app-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 8px 14px;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex: 1;
+}
+.app-btn:hover { border-color: rgba(201,245,0,0.3); background: var(--bg4); }
+
+.app-icon { font-size: 18px; }
+.app-small { font-size: 9px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+.app-big { font-family: var(--font-head); font-size: 13px; font-weight: 700; color: #fff; }
+
+/* Link cols */
+.footer-col-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--lime);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(201,245,0,0.12);
+  position: relative;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--lime);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-links li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-bottom: 1px solid transparent;
+  letter-spacing: 0.3px;
+}
+
+.footer-links li a:hover {
+  color: #fff;
+  padding-left: 6px;
+}
+
+.footer-links li a:hover { color: var(--lime); }
+
+/* Payments */
+.footer-payments {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-payments-label {
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.footer-payments-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pay-tile {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 8px 16px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+  cursor: default;
+}
+.pay-tile:hover { color: #fff; border-color: rgba(255,255,255,0.2); background: var(--bg4); }
+.pay-tile-icon { font-size: 16px; }
+
+/* Providers */
+.footer-providers {
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-providers-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.provider-tile {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  padding: 7px 18px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: all 0.2s;
+  cursor: default;
+}
+.provider-tile:hover { color: var(--lime); border-color: rgba(201,245,0,0.2); }
+
+/* Disclaimer */
+.footer-disclaimer {
+  display: flex;
+  gap: 16px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-left: 3px solid rgba(201,245,0,0.3);
+  padding: 20px 24px;
+  margin-bottom: 0;
+}
+
+.disclaimer-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+.footer-disclaimer p {
+  font-size: 12px;
+  color: #444;
+  line-height: 1.7;
+  font-weight: 500;
+}
+.footer-disclaimer strong { color: #666; }
+.disc-highlight { color: var(--red); font-weight: 700; }
+
+/* Bottom Bar */
+.footer-bottom {
+  background: #050505;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.footer-bottom-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-logo-small {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--lime);
+}
+
+.footer-copy {
+  font-size: 11px;
+  color: #333;
+  letter-spacing: 0.3px;
+}
+
+.footer-bottom-center {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.age-badge {
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.footer-resp {
+  font-size: 11px;
+  color: #444;
+  font-weight: 500;
+}
+
+.footer-legal-link {
+  font-size: 11px;
+  color: #333;
+  text-decoration: none;
+  font-family: var(--font-head);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-legal-link:hover { color: var(--lime); }
+
+.footer-bottom-right {
+  display: flex;
+  gap: 10px;
+}
+
+.secure-badge {
+  font-size: 11px;
+  color: #444;
+  font-family: var(--font-head);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+</style>
+
+<script>
+// Countdown
+let secs = 8*3600+42*60+17;
+setInterval(()=>{
+  secs=Math.max(0,secs-1);
+  const h=String(Math.floor(secs/3600)).padStart(2,'0');
+  const m=String(Math.floor((secs%3600)/60)).padStart(2,'0');
+  const s=String(secs%60).padStart(2,'0');
+  document.getElementById('h').textContent=h;
+  document.getElementById('m').textContent=m;
+  document.getElementById('s').textContent=s;
+},1000);
+
+// Slider
+let cur=0;
+const slides=document.querySelectorAll('.hero-slide');
+const dots=document.querySelectorAll('.hero-dot');
+function setSlide(i){
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur=i;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active');
+}
+setInterval(()=>setSlide((cur+1)%slides.length),5500);
+
+// Sport tabs
+document.querySelectorAll('.sport-tab').forEach(t=>{
+  t.addEventListener('click',function(){
+    document.querySelectorAll('.sport-tab').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Nav links
+document.querySelectorAll('.nav-link').forEach(l=>{
+  l.addEventListener('click',function(){
+    document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
